@@ -18,6 +18,18 @@ exports.commands = {
 			choonbot.sendMessage(message.channel, buffer);
 		}
 	},
+	say2: {
+		command: function (message, args) {
+			if (!(message.sender.id in whitelist)) return false;
+			if (!args[1]) return false;
+			let channelID = args[0];
+			let buffer = args[1];
+			for (var i = 1; i < args.length; i++) {
+				if (i !== 1) buffer += ", " + args[i];
+			}
+			choonbot.sendMessage(args[0], buffer);
+		}
+	},
 	poof: {
 		command: function (message, args) {
 			if (!(message.sender.id in whitelist)) return false;
@@ -46,11 +58,6 @@ exports.commands = {
 				choonbot.sendMessage(message.channel, "Error reloading. See console for more info.");
 				console.log('Reload Failure: ' + e.stack);
 			}
-		}
-	},
-	setavatar: {
-		command: function (message, args) {
-			//not implemented
 		}
 	},
 	dump: {
@@ -91,7 +98,7 @@ exports.commands = {
 			if (args[0]) {
 				let arg = toId(args[0]);
 				if (arg === "emotes") {
-					choonbot.sendMessage(message.channel, "Emotes list:\ndenko: Sends a denko face.\nkogamy: Sends a spoopy kogasa picture. Alias: boo\nreisenbox: Sends a box of Reisen for all of your Choon satisfying needs.");
+					choonbot.sendMessage(message.channel, "Emotes list:\n`denko`: Sends a denko face.\n`kogamy`: Sends a spoopy kogasa picture. Alias: `boo`\n`reisenbox`: Sends a box of Reisen for all of your Choon satisfying needs.\nThese are surrounded by `:`. One emote per message please.");
 				} else if (arg === "command") {
 					choonbot.sendMessage(message.channel, "did you just");
 				} else if (arg === "help") {
@@ -102,10 +109,22 @@ exports.commands = {
 					choonbot.sendMessage(message.channel, "Starts a game where we do absolutely nothing because Choon hasn't made anything yet.\nArgs:\n`end`: Ends the game.");
 				} else if (arg === "meme") {
 					choonbot.sendMessage(message.channel, "Sends a dank meme.");
+				} else if (arg === "pet") {
+					choonbot.sendMessage(message.channel, "Lets you pet a user by mentioning them!");
+				} else if (arg === "hug") {
+					choonbot.sendMessage(message.channel, "Lets you hug a user by mentioning them!");
+				} else if (arg === "notice") {
+					let botname = (spoon) ? "SpoonBot" : "ChoonBot";
+					choonbot.sendMessage(message.channel, botname + "-Senpai will notice whoever you mention!");
 				}
 			} else {
-				choonbot.sendMessage(message.channel, "Sup! I'm a bot made by Choon. He made me for fun, if you're upset let him know and I'll leave.\nCommand List:\nDev:`hello`\nGames:`game`\nMemes:`meme`\nMy command identifier is `*` or the vastly superior `('.w.') `. Put one of these before a command and at the beginning of your message. I separate arguments using `,` with a space at the end.\nFor help with specific commands use `*help command`. For a list of emotes use `*help emotes`.");
+				choonbot.sendMessage(message.channel, "Sup! I'm a bot made by Choon. He made me for fun, if you're upset let him know and I'll leave.\nCommand List:\nDev:`hello`\nGames:`game`\nMisc:`meme`,`pet`,`hug`,`notice`\nMy command identifier is `*` or the vastly superior `('.w.') `. Put one of these before a command and at the beginning of your message. I separate arguments using `,` with a space at the end.\nFor help with specific commands use `*help command`. For a list of emotes use `*help emotes`.");
 			}
+		}
+	},
+	schedule: {
+		command: function (message, args) {
+			choonbot.sendMessage(message.channel, "My Schedule [EST/EDT]:\nMWF: Classes at 9:05~10:55am\nTR: Classes at 8:05~9:25am and 12:05~1:20pm\nALL: Sleeping at 9:00pm~5:30am\nOtherwise I'm free. Please allow a 1 hour adjustment during MTWRF for commuting between campus and home.");
 		}
 	},
 	
@@ -132,8 +151,140 @@ exports.commands = {
 		}
 	},
 	
+	//misc
+
+	setavatar: {
+		command: function (message, args) {
+			if (!args[0]) return false;
+			if (isNaN(args[0]) || parseInt(args[0]) < 0 || parseInt(args[0]) != parseFloat(args[0])) return choonbot.sendMessage(message.channel, "I can only take positive integers.");
+			let avatarID = parseInt(args[0]);
+			//jpg files
+			let jpg = [true, false];
+			if (avatarID >= jpg.length) return choonbot.sendMessage(message.channel, "That avatar doesn't exist yet.");
+			let avatarFile = (jpg[avatarID]) ? "./avatars/" + String(avatarID) + ".jpg" : "./avatars/" + String(avatarID) + ".png";
+			choonbot.setAvatar(fs.readFileSync(avatarFile));
+			choonbot.sendMessage(message.channel, "Avatar set!");
+		}
+	},
+	dispavatar: {
+		command: function (message, args) {
+			if (!args[0]) return false;
+			if (isNaN(args[0]) || parseInt(args[0]) < 0 || parseInt(args[0]) != parseFloat(args[0])) return choonbot.sendMessage(message.channel, "I can only take positive integers.");
+			let avatarID = parseInt(args[0]);
+			//jpg files
+			let jpg = [true, false];
+			if (avatarID >= jpg.length) return choonbot.sendMessage(message.channel, "That avatar doesn't exist yet.");
+			let avatarAttach = (jpg[avatarID]) ? "./avatars/" + String(avatarID) + ".jpg" : "./avatars/" + String(avatarID) + ".png";
+			let avatarName = (jpg[avatarID]) ? "avatar.jpg" : "avatar.png";
+			choonbot.sendFile(message.channel, avatarAttach, avatarName);
+		}
+	},
+	
 	//the dankest of memes.
 	
+	meatloaf: {
+		command: function (message, args) {
+			if (message.channel.id !== "139023144387084288") return false;
+			let ride = 0;
+			let meatloaf = "";
+			let arr = [["M", "E", "A", "T", "L", "O", "A", "F"], ["m", "e", "a", "t", "l", "o", "a", "f"]];
+			for (let i = 0; i < 8; i++) {
+				ride = Math.floor(Math.random()*2);
+				meatloaf += arr[ride][i];
+			}
+			choonbot.sendMessage(message.channel, meatloaf);
+		}
+	},
+	unrip: {
+		command: function (message, args) {
+			if (unripAlready[message.channel.id]) return false;
+			let meme = ["it was just a prank bro", "I wasn't dead I was just sleeping", "*awake*"]
+			choonbot.sendMessage(message.channel, meme[Math.floor(Math.random()*meme.length)]);
+			global.unripAlready[message.channel.id] = true;
+		}
+	},
+	pet: {
+		command: function (message, args) {
+			let buffer = [];
+			let kek = true;
+			let lel = 0;
+			while (kek) {
+				if (message.mentions[lel]) {
+					if (message.mentions[lel].id === selfID) {
+						kek = false;
+						buffer = [];
+					} else {
+						buffer[buffer.length] = message.mentions[lel].mention();
+					}
+					lel++;
+				} else {
+					kek = false;
+				}
+			}
+			if (buffer.length === 0) {
+				let pet = ["*is pet*", "*appreciates the petting*", "*loves the petting*", "*reluctantly is pet*", "*cute choonbot noises*", "*demands you pet him more*", "*sensually moans*", "*awkwardly blushes*", "*floofs*", "*sputters*"];
+				return choonbot.sendMessage(message.channel, pet[Math.floor(Math.random()*pet.length)]);
+			}
+			if (buffer.length === 1) {
+				choonbot.sendMessage(message.channel, "*pets " + buffer[0] + "*");
+			} else if (buffer.length === 2) {
+				choonbot.sendMessage(message.channel, "*pets " + buffer[0] + " and " + buffer[1] + "*");
+			} else {
+				let output = "*pets ";
+				for (let j = 0; j < buffer.length; j++) {
+					if (j !== 0) output += ", ";
+					if (j === buffer.length - 1) output += "and ";
+					output += buffer[j];
+				}
+				choonbot.sendMessage(message.channel, output + "*");
+			}
+		}
+	},
+	hug: {
+		command: function (message, args) {
+			let buffer = [];
+			let kek = true;
+			let lel = 0;
+			let sender = message.sender.mention();
+			while (kek) {
+				if (message.mentions[lel]) {
+					if (message.mentions[lel].id === selfID) {
+						kek = false;
+						buffer = [];
+					} else if (message.mentions[lel].mention() === sender) {
+						kek = false;
+						buffer = ["self"];
+					} else {
+						buffer[buffer.length] = message.mentions[lel].mention();
+					}
+					lel++;
+				} else {
+					kek = false;
+				}
+			}
+			if (buffer.length === 0) {
+				let hug = ["*is hugged*", "*hugs back*", "*loves " + sender + "'s hug*", "*hugs " + sender + " back and breaks away*\nIt's not that I wanted you to hug me or anything, you baka...", "*cute choonbot noises*", "*gives " + sender + " a tight hug*", "*hugs " + sender + " back and kisses them on the cheek*", "*awkwardly blushes and hugs " + sender + " back*", "*floofs*", "*snuggles with " + sender + "*"];
+				return choonbot.sendMessage(message.channel, hug[Math.floor(Math.random()*hug.length)]);
+			}
+			if (buffer.length === 1) {
+				if (buffer[0] === "self") {
+					choonbot.sendMessage(message.channel, sender + " hugs themself.");
+				} else {
+					choonbot.sendMessage(message.channel, sender + " has hugged " + buffer[0] + "!");
+				}
+			} else if (buffer.length === 2) {
+				choonbot.sendMessage(message.channel, sender + " has hugged " + buffer[0] + " and " + buffer[1] + "!");
+			} else {
+				let output = sender + " has hugged ";
+				for (let j = 0; j < buffer.length; j++) {
+					if (j !== 0) output += ", ";
+					if (j === buffer.length - 1) output += "and ";
+					output += buffer[j];
+				}
+				choonbot.sendMessage(message.channel, output + "!");
+			}
+		}
+	},
 	unspoon: {
 		command: function (message, args) {
 			if (spoon) {
@@ -158,6 +309,11 @@ exports.commands = {
 				}, 666);
 				global.spoon = true;
 			}
+		}
+	},
+	fork: {
+		command: function (message, args) {
+			choonbot.sendMessage(message.channel, "ew forks");
 		}
 	},
 	notice: {

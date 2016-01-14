@@ -6,10 +6,6 @@
 //Down here, I'm called...
 const NAMAE = "ChoonBot";
 
-//And my login credentials are...
-const EMAIL = "choonbot@gmail.com";
-const PASSW = "IAmErrorLol69";
-
 //global function init
 global.Discord = require('discord.js');
 global.fs = require('fs');
@@ -50,12 +46,18 @@ global.uncacheTree = function (root) {
 global.choonbot = new Discord.Client();
 global.commands = require('./recognition.js').commands;
 global.emotes = require('./recognition.js').emotes;
-global.configBuffer = require('./!!!!config.js');
+try {
+	global.configBuffer = require('./config.js');
+} catch (e) {
+	console.log('config.js doesn\'t exist; try copying config-base.js to config.js.');
+	process.exit(-1);
+}
 for (var i in configBuffer) {
 	global[i] = configBuffer[i];
 }
 delete global.configBuffer;
 global.games = {};
+global.unripAlready = {};
 choonbot.setUsername("ChoonBot");
 global.spoon = false;
 //check for users.txt
@@ -99,7 +101,7 @@ users = getUsers();
 
 //And thus we begin.
 choonbot.on("ready", function () {
-	console.log("そう、はじめる。 C:" + choonbot.channels.length);
+	console.log("Ready to go! ('.w.') C:" + choonbot.channels.length);
 });
 choonbot.on("disconnected", function () {
 	console.log("rip in kill [dc]");
@@ -111,6 +113,13 @@ choonbot.on("message", function (message) {
 	//No need to check ourselves. We already rekt ourselves.
 	if (message.sender.id === selfID) return false;
 	if (message.channel.id in antipost) return false;
+	if (message.channel.server.id in serverCrosstalk) {
+		let crosstalk = false;
+		for (let i = 0; i < serverCrosstalk[message.channel.server.id].length; i++) {
+			if (message.channel.id === serverCrosstalk[message.channel.server.id][i]) crosstalk = true;
+		}
+		if (!crosstalk) return false;
+	}
 	let msg = message.content;
 	if (!verbose) {
 		console.log("Message Intercept in #" + message.channel.name + " from @" + message.sender.username + ": " + msg);
@@ -142,6 +151,9 @@ choonbot.on("message", function (message) {
 				return commands[msg].command(message, args);
 			}
 		}
+	}
+	if (msg.toLowerCase() === "h") { //Press H to hug.
+		return commands.hug.command(message, []);
 	}
 	if (message.everyoneMentioned) {
 		choonbot.reply(message, "YOU ARE LITERALLY THE WORST KIND OF PERSON FOR USING THE EVERYONE TAG");
