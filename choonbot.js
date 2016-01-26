@@ -112,12 +112,14 @@ choonbot.on("message", function (message) {
 	//No need to check ourselves. We already rekt ourselves.
 	if (message.sender.id === selfID) return false;
 	if (message.channel.id in antipost) return false;
-	if (message.channel.server.id in serverCrosstalk) {
-		let crosstalk = false;
-		for (let i = 0; i < serverCrosstalk[message.channel.server.id].length; i++) {
-			if (message.channel.id === serverCrosstalk[message.channel.server.id][i]) crosstalk = true;
+	if (message.channel.server) {
+		if (message.channel.server.id in serverCrosstalk) {
+			let crosstalk = false;
+			for (let i = 0; i < serverCrosstalk[message.channel.server.id].length; i++) {
+				if (message.channel.id === serverCrosstalk[message.channel.server.id][i]) crosstalk = true;
+			}
+			if (!crosstalk) return false;
 		}
-		if (!crosstalk) return false;
 	}
 	let msg = message.content;
 	if (!verbose) {
