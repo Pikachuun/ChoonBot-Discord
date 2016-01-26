@@ -45,7 +45,7 @@ exports.commands = {
 			if (!(message.sender.id in whitelist)) return false;
 			try {
 				uncacheTree('./recognition.js');
-				uncacheTree('./!!!!config.js');
+				uncacheTree('./config.js');
 				global.commands = require('./recognition.js').commands;
 				global.emotes = require('./recognition.js').emotes;
 				global.configBuffer = require('./config.js');
