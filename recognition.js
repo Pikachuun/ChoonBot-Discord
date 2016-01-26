@@ -45,10 +45,10 @@ exports.commands = {
 			if (!(message.sender.id in whitelist)) return false;
 			try {
 				uncacheTree('./recognition.js');
-				uncacheTree('./!!!!config.js');
+				uncacheTree('./config.js');
 				global.commands = require('./recognition.js').commands;
 				global.emotes = require('./recognition.js').emotes;
-				global.configBuffer = require('./!!!!config.js');
+				global.configBuffer = require('./config.js');
 				for (let i in configBuffer) {
 					global[i] = configBuffer[i];
 				}
@@ -184,7 +184,7 @@ exports.commands = {
 	
 	meatloaf: {
 		command: function (message, args) {
-			if (message.channel.id !== "139023144387084288") return false;
+			if (!(message.channel.id === "139023144387084288" || message.channel.id in absoluteChannel)) return false;
 			let ride = 0;
 			let meatloaf = "";
 			let arr = [["M", "E", "A", "T", "L", "O", "A", "F"], ["m", "e", "a", "t", "l", "o", "a", "f"]];
