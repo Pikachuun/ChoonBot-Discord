@@ -14,6 +14,8 @@ exports.verbose = false;
 
 //These rooms we don't like spam in...
 exports.noSpam = {};
+//We can do whatever we want here.
+exports.absoluteChannel = {};
 //We can only post hmms here.
 exports.onlyHmm = {};
 //And these rooms we should just avoid.

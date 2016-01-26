@@ -144,9 +144,13 @@ choonbot.on("message", function (message) {
 					args = args[1].split(", ");
 				}
 				console.log("CMD:" + msg + "/ARG:" + args);
-				if (!commands[msg].isHmm && message.channel.id in onlyHmm || commands[msg].isHmm && !(message.channel.id in onlyHmm)) return false;
-				if (commands[msg].isSpam && message.channel.id in noSpam) return false;
-				if (commands[msg].alias && commands[commands[msg].alias]) return commands[commands[msg].alias].command(message, args);
+				if (!(message.channel.id in absoluteChannel)) {
+					if (!commands[msg].isHmm && message.channel.id in onlyHmm || commands[msg].isHmm && !(message.channel.id in onlyHmm)) {
+						if (message.channel.id !== "120242878738989056") return false;
+					}
+					if (commands[msg].isSpam && message.channel.id in noSpam) return false;
+					if (commands[msg].alias && commands[commands[msg].alias]) return commands[commands[msg].alias].command(message, args);
+				}
 				return commands[msg].command(message, args);
 			}
 		}
