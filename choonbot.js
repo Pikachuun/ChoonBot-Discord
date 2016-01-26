@@ -58,7 +58,6 @@ for (var i in configBuffer) {
 delete global.configBuffer;
 global.games = {};
 global.unripAlready = {};
-choonbot.setUsername("ChoonBot");
 global.spoon = false;
 //check for users.txt
 let users = fs.readFileSync('./users.txt');
@@ -98,10 +97,10 @@ users = getUsers();
 
 
 
-
 //And thus we begin.
 choonbot.on("ready", function () {
 	console.log("Ready to go! ('.w.') C:" + choonbot.channels.length);
+	choonbot.setUsername("ChoonBot");
 });
 choonbot.on("disconnected", function () {
 	console.log("rip in kill [dc]");
