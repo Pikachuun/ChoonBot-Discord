@@ -193,6 +193,11 @@ choonbot.on("message", function (message) {
 			if (emotes[toId(msg)].type === "file") return choonbot.sendFile(message.channel, emotes[toId(msg)].emote, emotes[toId(msg)].name);
 		}
 	}
+	if ((msg.split("(╯°□°）╯︵ ┻━┻")[1] || msg.substr(msg.length - 12, msg.length) === "(╯°□°）╯︵ ┻━┻") && !(message.channel.id in noSpam)) {
+		let tableflip = ["┬─┬﻿ ノ( ゜-゜ノ)", "(╯°□°)╯︵ ┻━┻ ︵ ╯(°□° ╯)", "┬─┬﻿ ︵ /(.□. \\）", "┬─┬ ノ( ^_^ノ)", "(╯°Д°）╯︵ /(.□ . \\)", "(/¯◡ ‿ ◡)/¯ ~ ┬─┬﻿", "ノ┬─┬ノ ︵ ( \\o°o)\\"]//, "ik that feel man, i hate it when reisen's in hentai too"]
+		console.log("Tableflip");
+		return choonbot.sendMessage(message.channel, tableflip[Math.floor(Math.random()*tableflip.length)]);
+	}
 });
 
 choonbot.login(EMAIL, PASSW);
