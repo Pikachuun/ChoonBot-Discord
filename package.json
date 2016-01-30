@@ -4,7 +4,7 @@
   "description": "ChoonBot",
   "main": "choonbot.js",
   "scripts": {
-    "test": "node choonbot.js"
+    "start": "node choonbot.js"
   },
   "repository": {
     "type": "git",
