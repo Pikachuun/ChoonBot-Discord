@@ -1,0 +1,25 @@
+{
+  "name": "choonbot-discord",
+  "version": "1.0.4",
+  "description": "ChoonBot",
+  "main": "choonbot.js",
+  "scripts": {
+    "test": "node choonbot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pikachuun/ChoonBot-Discord.git"
+  },
+  "keywords": [
+    "choon",
+    "is",
+    "a",
+    "nerd"
+  ],
+  "author": "Choon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pikachuun/ChoonBot-Discord/issues"
+  },
+  "homepage": "https://github.com/Pikachuun/ChoonBot-Discord#readme"
+}
