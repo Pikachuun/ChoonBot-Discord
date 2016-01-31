@@ -23,7 +23,6 @@ global.getUsers = function () {
 	let usertxt = fs.readFileSync('./users.txt').toString();
 	if (!usertxt.split('raisin is best waifu and if you disagree your bad!!!!!!11!!!\n\n')[1]) return false;
 	usertxt = usertxt.split('raisin is best waifu and if you disagree your bad!!!!!!11!!!\n\n')[1];
-	console.log("Ping!");
 	return usertxt;
 };
 global.uncacheTree = function (root) {
@@ -63,15 +62,16 @@ global.spoon = false;
 let users = fs.readFileSync('./users.txt');
 //ok
 users = getUsers();
-
-
-
-
-
-
-
-
-
+//create http server for heroku, and prevent it from idling
+let http = require('http');
+http.createServer(function (req, res) { 
+	res.writeHead(200, {'Content-Type': 'text/plain'}); 
+	res.end('time over', 'utf-8'); 
+}).listen(process.env.PORT || 5000);
+setInterval(function () {
+	http.get("http://choonbot-discord.herokuapp.com");
+	console.log("Ping!");
+}, 300000);
 
 
 
