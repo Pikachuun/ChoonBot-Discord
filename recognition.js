@@ -89,6 +89,22 @@ exports.commands = {
 			choonbot.leaveServer(message.channel.server);
 		}
 	},
+	eval: {
+		command: function (message, args) {
+			if (!(message.sender.id in whitelist)) return false;
+			let buffer = args[0];
+			if (!buffer) return false;
+			for (var i = 0; i < args.length; i++) {
+				if (i !== 0) buffer += ", " + args[i];
+			}
+			buffer = buffer.replace(/`/g, "");
+			try {
+				choonbot.sendMessage(message.channel, eval(buffer));
+			} catch (e) {
+				choonbot.sendMessage(message.channel, "```Error Detected: " + e.stack + "```");
+			}
+		}
+	},
 	
 	//info
 	
