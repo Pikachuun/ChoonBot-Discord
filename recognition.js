@@ -119,12 +119,14 @@ exports.commands = {
 					choonbot.sendMessage(message.channel, "did you just");
 				} else if (arg === "help") {
 					choonbot.sendMessage(message.channel, "seriously?");
+				} else if (arg === "*") {
+					choonbot.sendMessage(message.channel, "well played");
 				} else if (arg === "hello") {
 					choonbot.sendMessage(message.channel, "A test command that makes me say hello.");
 				} else if (arg === "game") {
-					choonbot.sendMessage(message.channel, "Starts a game where we do absolutely nothing because Choon hasn't made anything yet.\nArgs:\n`end`: Ends the game.");
+					choonbot.sendMessage(message.channel, "`game`: Starts a game where we do absolutely nothing because Choon hasn't made anything yet.\n`game end`: Ends the game.");
 				} else if (arg === "meme") {
-					choonbot.sendMessage(message.channel, "Sends a dank meme.");
+					choonbot.sendMessage(message.channel, "Sends a dank meme. The argument can change the meme!");
 				} else if (arg === "pet") {
 					choonbot.sendMessage(message.channel, "Lets you pet a user by mentioning them!");
 				} else if (arg === "hug") {
@@ -132,9 +134,11 @@ exports.commands = {
 				} else if (arg === "notice") {
 					let botname = (spoon) ? "SpoonBot" : "ChoonBot";
 					choonbot.sendMessage(message.channel, botname + "-Senpai will notice whoever you mention!");
+				} else if (arg === "morse") {
+					choonbot.sendMessage(message.channel, "`morse encode, *`: Translates whatever you tell me into morse code.\n`morse decode, *`: Translates whatever you tell me from morse code.");
 				}
 			} else {
-				choonbot.sendMessage(message.channel, "Sup! I'm a bot made by Choon. He made me for fun, if you're upset let him know and I'll leave.\nCommand List:\nDev:`hello`\nGames:`game`\nMisc:`meme`,`pet`,`hug`,`notice`\nMy command identifier is `*` or the vastly superior `('.w.') `. Put one of these before a command and at the beginning of your message. I separate arguments using `,` with a space at the end.\nFor help with specific commands use `*help command`. For a list of emotes use `*help emotes`.");
+				choonbot.sendMessage(message.channel, "Sup! I'm a bot made by Choon. He made me for fun, if you're upset let him know and I'll leave.\nCommand List:\nDev:`hello`,`help *`\nGames:`game`\nMisc:`meme *`,`pet *`,`hug *`,`notice *`,`morse *`\nMy command identifier is `*` or the vastly superior `('.w.') `. Put one of these before a command and at the beginning of your message. I separate arguments using `,` with a space at the end.\nFor help with specific commands use `help command`.\nI also can use emotes by surrounding the requested emote with `:`. For a list of emotes use `emotes` as an argument for this command.");
 			}
 		}
 	},
@@ -198,6 +202,52 @@ exports.commands = {
 	
 	//the dankest of memes.
 	
+	morse: {
+		command: function (message, args) {
+			if (args[0] === "*") return choonbot.sendMessage(message.channel, "._.");
+			if (args[0].toLowerCase() !== "encode" && args[0].toLowerCase() !== "decode" || args.length < 2) return false;
+			if (args[1] === "*") return choonbot.sendMessage(message.channel, "...");
+			let buffer = "";
+			for (let i = 1; i < args.length; i++) {
+				if (i !== 1) buffer += ", ";
+				buffer += args[i];
+			}
+			let morse = "";
+			let table = {};
+			if (args[0].toLowerCase() === "encode") {
+				table = {"a":".-", "b":"-...", "c":"-.-.", "d":"-..", "e":".", "f":"..-.", "g":"--.", "h":"....", "i":"..", "j":".---", "k":"-.-", "l":".-..", "m":"--", "n":"-.", "o":"---", "p":".---.", "q":"--.-", "r":".-.", "s":"...", "t":"-", "u":"..-", "v":"...-", "w":".--", "x":"-..-", "y":"-.--", "z":"--..", "0":"-----", "1":".----", "2":"..---", "3":"...--", "4":"....-", "5":".....", "6":"-....", "7":"--...", "8":"---..", "9":"----.", ".":".-.-.-", ",":"--..--", ":":"---...", "?":"..--..", "'":".----.", "-":"-....-", "/":"-..-.", "(":"-.--.-", ")":"-.--.-", "\"": ".-..-.", "@":".--.-.", "=":"-...-", " ":" "};
+				for (let j = 0; j < buffer.length; j++) {
+					if (j === 0) {
+						morse += "Translated Message: ```";
+					} else {
+						morse += "   ";
+					}
+					if (!(buffer[j].toLowerCase() in table)) return choonbot.sendMessage(message.channel, "Invalid character `" + buffer[j] + "` detected. Translation failed.");
+					morse += table[buffer[j].toLowerCase()];
+					if (j === buffer.length - 1) morse += "```";
+				}
+				choonbot.sendMessage(message.channel, morse);
+			} else {
+				if (buffer[0] !== "`" || buffer[buffer.length - 1] !== "`" || buffer.split("   ").length < 2) return choonbot.sendMessage(message.channel, "Invalid format detected. Use \\`these\\` around your message and separate each letter with a triple space please [spaces are 7 spaces].");
+				table = {".-":"a", "-...":"b", "-.-.":"c", "-..":"d", ".":"e", "..-.":"f", "--.":"g", "....":"h", "..":"i", ".---":"j", "-.-":"k", ".-..":"l", "--":"m", "-.":"n", "---":"o", ".---.":"p", "--.-":"q", ".-.":"r", "...":"s", "-":"t", "..-":"u", "...-":"v", ".--":"w", "-..-":"x", "-.--":"y", "--..":"z", "-----":"0", ".----":"1", "..---":"2", "...--":"3", "....-":"4", ".....":"5", "-....":"6", "--...":"7", "---..":"8", "----.":"9", ".-.-.-":".", "--..--":",", "---...":":", "..--..":"?", ".----.":"'", "-....-":"-", "-..-.":"/", "-.--.-":"(", "-.--.-":")", "\"": ".-..-.", ".--.-.":"@", "-...-":"=", " ":" "};
+				buffer = buffer.substr(1, buffer.length - 2).split("       "); //get spaces first
+				let bufferA = [];
+				for (let k = 0; k < buffer.length; k++) {
+					if (k > 0) bufferA[bufferA.length] = " ";
+					bufferA = bufferA.concat(buffer[k].split("   "));
+				}
+				for (let j = 0; j < bufferA.length; j++) {
+					if (j === 0) {
+						morse += "Translated Message: ```";
+					}
+					if (!(bufferA[j] in table)) return choonbot.sendMessage(message.channel, "Invalid character `" + bufferA[j] + "` detected. Translation failed.");
+					morse += table[bufferA[j]];
+					if (j === bufferA.length - 1) morse += "```";
+				}
+				choonbot.sendMessage(message.channel, morse);
+			}
+		}
+	},
 	meatloaf: {
 		command: function (message, args) {
 			if (!(message.channel.id === "139023144387084288" || message.channel.id in absoluteChannel)) return false;
@@ -221,6 +271,7 @@ exports.commands = {
 	},
 	pet: {
 		command: function (message, args) {
+			if (args[0] === "*") return choonbot.sendMessage(message.channel, "I don't want to pet a star...");
 			let buffer = [];
 			let kek = true;
 			let lel = 0;
@@ -258,6 +309,7 @@ exports.commands = {
 	},
 	hug: {
 		command: function (message, args) {
+			if (args[0] === "*") return choonbot.sendMessage(message.channel, "hugging a star would hurt...");
 			let buffer = [];
 			let kek = true;
 			let lel = 0;
@@ -335,6 +387,7 @@ exports.commands = {
 	notice: {
 		command: function (message, args) {
 			if (message.everyoneMentioned) return choonbot.reply(message, "NICE TRY, NERD");
+			if (args[0] === "*") return choonbot.sendMessage(message.channel, "can't notice stars sorry");
 			let buffer = [];
 			let output = "ChoonBot-senpai notices you, ";
 			let kek = true;
@@ -376,6 +429,7 @@ exports.commands = {
 		isSpam: true,
 		command: function (message, args) {
 			if (args[0]) {
+				if (args[0] === "*") return choonbot.sendMessage(message.channel, "here's a * for you: ( ° ͜ʖ͡°)╭∩╮");
 				let arg = toId(args[0]);
 				if (arg === "dank") { //dank placeholder
 					return choonbot.sendMessage(message.channel, "dank meme");
@@ -395,9 +449,9 @@ exports.commands = {
 			//Donger Part list courtesy of dongerlist.com.
 			//ლʕ ” ‾́ _ʖ ‾́ ” ʔ╭∩╮
 			//ᕙ༼~‾́ل͜‾́~༽ᕗ
-			let arm = ["╰", "╯", "ヽ", "ﾉ", "ノ", "∩", "੧", "੭", "⋋", "⋌", "ლ", "╭∩╮", "⊃", "つ", "ᕙ", "ᕗ", "ᕕ", "୧", "୨", "┌", "┐", "└", "┘", "٩", "و", "ʋ", "ง", "凸", "ᕦ", "ᕤ", "へ", "ᓄ", "¯\\_", "_/¯", "╚═", "═╝", "〜", "┌∩┐", "c", "╮", "乁", "ㄏ", "ᕤ", "ԅ", "o͡͡͡╮", "╭o͡͡͡", "ノ⌒.", "//╲/\\╭", "╮/\\╱﻿\\"];
+			let arm = ["╰", "╯", "ヽ", "ﾉ", "ノ", "∩", "੧", "੭", "⋋", "⋌", "ლ", "╭∩╮", "⊃", "つ", "ᕙ", "ᕗ", "ᕕ", "୧", "୨", "┌", "┐", "└", "┘", "٩", "و", "ʋ", "ง", "凸", "ᕦ", "ᕤ", "へ", "ᓄ", "¯\\\\_", "_/¯", "╚═", "═╝", "〜", "┌∩┐", "c", "╮", "乁", "ㄏ", "ᕤ", "ԅ", "o͡͡͡╮", "╭o͡͡͡", "ノ⌒.", "//╲/\\╭", "╮/\\╱﻿\\"];
 			let bod = ["(", ")", "[", "]", "༼", "༽", "ʕ", "ʔ", "໒(", ")७", "|", "⁞", "།", "།", "〳", "〵", "╏", "║", "▐", "░", "▒"];
-			let che = [".", "✿", "˵", ",", "*", "”", "=", "~", "∗", ":"];
+			let che = [".", "✿", "˵", ",", "\\*", "”", "=", "\\~", "∗", ":"];
 			let eye = ["•́", "•̀", "￣", "ݓ", "✖", "･", "՞", "﹒", "﹒︣", "︣", "⌣", "́", "⁰", "❛", "¯͒", "¯", "͒", "´", "\`", "ཀ", "༎ຶ", "ຈ", "O", "͡", "◕", "-", "͠°", "°͠", "⇀", "↼", "ಥ", "☯", "͝°", "°", "ಠ", "ಠ", "ಠೃ", "ರ", "ರೃ", "ರ", "◕", "˙", "◔", "͡°", "□", "⌐", "▀", "・", "◉", "‾́", "-", "⊙", "◐", "◖", "◗", "◑", "ヘ", "¬", "≖", "̿̿", "̿", "･ิ", "ิ", "◔", "ʘ̆", "ʘ", "☉", ";", "͡■", "■͡", "͡°", "°͡", "͡ຈ", "ຈ͡", "ຈ", "͡◕", "◕͡", "◕", "°", "◉", "͡", "º", "͡;", "͡☉", "°", "͜ಠ", "͡ʘ", "͡’", "•", "^", "◕", "▀̿", "ʘ͡", "–", "❛", "x", "ᴼ", "＾", "˘", "۞", "◯", "๑", "͡ᵔ", "͡°", "°", "͒", "σ", "✪", "♥", "❛ั", "•̀", "•́", "☉", "͠ຈ", "╥", "ᵒ̌", "ಡ", "͡°̲", "ᵕ", "ି", "ୖ", "ଵ", "்", "౦", "್", "ಠ", "ര", "ි", "ᓀ", "ᓂ", "⊡", "⊙", "⊚", "⊘", "⊗", "☯", "¤"];
 			let mou = ["_", "ਊ", "︿", "o", "〜", "〰", "∧", "Д", "۝", "ڡ", "ʖ", "͜ʖ", "ل͜", "-", "‸", "⌂", "ل͟", "﹏", "益", "‿", "o", "ʖ̯", "Ĺ̯", "͜ʟ", "д", "ᗜ", "ᴥ", "ل", "ω", "◞౪◟", "౪", "‸", "෴", "﹏ु", "_ʖ", "-", "͜ر", "ں", "┏ل͜┓", "ヮ", "͜ ʖ", "Ĺ̯", "▽", "▃", "౪", "ₒ", "_̀", "ε", "~͜ʖ~", "□", "◡", "3", "_ʖ", "͟ʖ", "ڡ", "◯", "ʖ̫", "╭ ͟ʖ╮", "╭͜ʖ╮", "͟ل͜", "۝", "~", "͜ʖ", "(oo)", "▾"];
 			let acc = ["┬┴┬┴┤", "├┬┴┬┴", "⊹", "︻̷┻̿═━一", "━☆ﾟ.*･｡ﾟ", "︵┻━┻", "Zzzzzzz", "†", "⌐■-■", "✡", "/̵͇̿̿/’̿’̿ ̿", "︵ ส็็็็็็็ส", "┬───┬", "҉̛༽̨҉҉ﾉ̨", "༼ ༽", "┬──┬╯﻿", "̿ ̿ ̿ ̿’̿’̵з", "♫", "♪", "✿", "( . ( . )", "━ 卐", "卐", "ð", "✂", "╰⋃╯", "̿̿ ̿̿ ̿’̿’̵͇̿̿з=", "-]—-", "︵ ǝʞoɾ ǝɯɐs", "┣▇▇▇═──", "━╤デ╦︻", "├┬", "¤=[]:::::&gt;", "⌒.[̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅]"];
