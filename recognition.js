@@ -9,16 +9,15 @@ exports.commands = {
 	},
 	say: {
 		command: function (message, args) {
-			if (!(message.sender.id in whitelist)) return false;
 			let buffer = args[0];
 			if (!buffer) return false;
 			for (var i = 0; i < args.length; i++) {
 				if (i !== 0) buffer += ", " + args[i];
 			}
-			choonbot.sendMessage(message.channel, buffer);
+			choonbot.sendMessage(message.channel, message.sender.mention() + " says: \"" + buffer + "\"");
 		}
 	},
-	say2: {
+	echo: {
 		command: function (message, args) {
 			if (!(message.sender.id in whitelist)) return false;
 			if (!args[1]) return false;
@@ -114,12 +113,12 @@ exports.commands = {
 			if (args[0]) {
 				let arg = toId(args[0]);
 				if (arg === "emotes") {
-					choonbot.sendMessage(message.channel, "Emotes list:\n`denko`: Sends a denko face.\n`kogamy`: Sends a spoopy kogasa picture. Alias: `boo`\n`reisenbox`: Sends a box of Reisen for all of your Choon satisfying needs.\nThese are surrounded by `:`. One emote per message please.");
+					choonbot.sendMessage(message.channel, "Emotes list:\n`denko`: Sends a denko face.\n`kogamy`: Sends a spoopy kogasa picture. Alias:`boo`\n`lewd`: Sends a gif that basically says \"lewd.\"\n`mg`: Sends a mg-tastic picture of Ringo enjoying Pocky Dango.\n`mokay`: Sends a manga-esque Mokou face saying OK. Alias:`mok`\n`reisenbox`: Sends a box of Reisen for all of your Choon satisfying needs.\n`reisenfacev`: Sends a vector-esque version of the dank reisenface meme.\n`reisenfloof`: Sends the best floof.\n`reisenwut`: Sends a very confused Reisen. Perfect for when you have no clue what is going on.\n`shoutime`: Tells you what time it is.\nThese are surrounded by `:`. One emote per message please.");
 				} else if (arg === "command") {
 					choonbot.sendMessage(message.channel, "did you just");
 				} else if (arg === "help") {
 					choonbot.sendMessage(message.channel, "seriously?");
-				} else if (arg === "*") {
+				} else if (args[0] === "*") {
 					choonbot.sendMessage(message.channel, "well played");
 				} else if (arg === "hello") {
 					choonbot.sendMessage(message.channel, "A test command that makes me say hello.");
@@ -136,9 +135,11 @@ exports.commands = {
 					choonbot.sendMessage(message.channel, botname + "-Senpai will notice whoever you mention!");
 				} else if (arg === "morse") {
 					choonbot.sendMessage(message.channel, "`morse encode, *`: Translates whatever you tell me into morse code.\n`morse decode, *`: Translates whatever you tell me from morse code.");
+				} else if (arg === "cri") {
+					choonbot.sendMessage(message.channel, "For those moments when you're really sad, I'll cry with you.");
 				}
 			} else {
-				choonbot.sendMessage(message.channel, "Sup! I'm a bot made by Choon. He made me for fun, if you're upset let him know and I'll leave.\nCommand List:\nDev:`hello`,`help *`\nGames:`game`\nMisc:`meme *`,`pet *`,`hug *`,`notice *`,`morse *`\nMy command identifier is `*` or the vastly superior `('.w.') `. Put one of these before a command and at the beginning of your message. I separate arguments using `,` with a space at the end.\nFor help with specific commands use `help command`.\nI also can use emotes by surrounding the requested emote with `:`. For a list of emotes use `emotes` as an argument for this command.");
+				choonbot.sendMessage(message.channel, "Sup! I'm a bot made by Choon. He made me for fun, if you're upset let him know and I'll leave.\nCommand List:\nDev:`hello`,`help *`,`say *`,`echo *, *`\nGames:`game`\nMisc:`meme *`,`pet *`,`hug *`,`notice *`,`morse *`,`cri`\nMy command identifier is `*` or the vastly superior `('.w.') `. Put one of these before a command and at the beginning of your message. I separate arguments using `,` with a space at the end.\nFor help with specific commands use `help command`.\nI also can use emotes by surrounding the requested emote with `:`. For a list of emotes use `emotes` as an argument for this command.");
 			}
 		}
 	},
@@ -267,6 +268,12 @@ exports.commands = {
 			let meme = ["it was just a prank bro", "I wasn't dead I was just sleeping", "*awake*"]
 			choonbot.sendMessage(message.channel, meme[Math.floor(Math.random()*meme.length)]);
 			global.unripAlready[message.channel.id] = true;
+		}
+	},
+	cri: {
+		command: function (message, args) {
+			let cri = [";_;", ";_;7", "*cries softly*", "BibleThump", "bibolfamp", ";~;", ";-;", "(;_ʖ;)", "*runs up to " + message.sender.mention() + "'s and cries on their shoulder*", "*sobs*"];
+			choonbot.sendMessage(message.channel, cri[Math.floor(Math.random()*cri.length)]);
 		}
 	},
 	pet: {
@@ -530,6 +537,16 @@ exports.emotes = {
 		emote: "./images/mg.jpg",
 		name: "mg.jpg"
 	},
+	mok: {
+		type: "file",
+		emote: "./images/mokay.jpg",
+		name: "mok.jpg"
+	},
+	mokay: {
+		type: "file",
+		emote: "./images/mokay.jpg",
+		name: "mokay.jpg"
+	},
 	reisenbox: {
 		type: "file",
 		emote: "./images/reisenbox.png",
@@ -544,6 +561,11 @@ exports.emotes = {
 		type: "file",
 		emote: "./images/reisenfloof.png",
 		name: "reisenfloof.png"
+	},
+	reisenwut: {
+		type: "file",
+		emote: "./images/reisenwut.jpg",
+		name: "reisenwut.jpg"
 	},
 	shoutime: {
 		type: "file",

@@ -160,6 +160,9 @@ choonbot.on("message", function (message) {
 	if (msg.toLowerCase() === "h") { //Press H to hug.
 		return commands.hug.command(message, []);
 	}
+	if (msg.toLowerCase() === "c") { //Press C to cri.
+		return commands.cri.command(message, []);
+	}
 	if (message.everyoneMentioned) {
 		choonbot.reply(message, "YOU ARE LITERALLY THE WORST KIND OF PERSON FOR USING THE EVERYONE TAG");
 	} else {
