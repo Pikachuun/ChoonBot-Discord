@@ -167,10 +167,15 @@ choonbot.on("message", function (message) {
 		choonbot.reply(message, "YOU ARE LITERALLY THE WORST KIND OF PERSON FOR USING THE EVERYONE TAG");
 	} else {
 		for (var i in message.mentions) {
-			if (message.mentions[i].id === selfID) choonbot.reply(message, "you called?")
+			if (message.mentions[i].id === selfID) choonbot.reply(message, "you called?");
 		}
 	}
 	msg = msgbackup;
+	//emote block
+	let emoteCall = {};
+	let emoteFin = {};
+	let rngsum = 0;
+	let rngval = 0;
 	if (emtS[0] !== emtS[1] && msg.split(emtS[0])[1]) {
 		console.log("Emote Checksum 1 Passed.");
 		msg = msg.split(emtS[0])[1];
@@ -178,9 +183,21 @@ choonbot.on("message", function (message) {
 			console.log("Emote Checksum 2 Passed.");
 			msg = msg.split(emtS[0])[0];
 			if (toId(msg) in emotes) {
-				console.log("Emote Detected (" + toId(msg) + ")! Sending " + emotes[toId(msg)].emote + ".");
-				if (emotes[toId(msg)].type === "text") return choonbot.sendMessage(message.channel, emotes[toId(msg)].emote);
-				if (emotes[toId(msg)].type === "file") return choonbot.sendFile(message.channel, emotes[toId(msg)].emote, emotes[toId(msg)].name);
+				emoteCall = emotes[toId(msg)];
+				if (emoteCall.rng) {
+					rngval = Math.floor(Math.random()*emoteCall.rng.reduce(function (a, b) {return a + b;}));
+					for (let r = 0; r < emoteCall.rng.length; r++) {
+						rngsum += emoteCall.rng[r];
+						if (rngval < rngsum) {
+							emoteFin = {emote:emoteCall.emote[r], name:emoteCall.name[r]};
+							r = emoteCall.rng.length;
+						}
+					}
+				} else {
+					emoteFin = emotes[toId(msg)];
+				}
+				console.log("Emote Detected (" + toId(msg) + ")! Sending " + emoteFin.emote + ".");
+				return choonbot.sendFile(message.channel, emoteFin.emote, emoteFin.name);
 			}
 		} else {
 			let err = 1*!(msg.split(emtS[1])[1]) + 2*(msg[msg.length - 1] !== emtS[1]);
@@ -191,9 +208,21 @@ choonbot.on("message", function (message) {
 		console.log("Emote Checksum Q Passed.");
 		msg = msg.split(emtS[0])[1];
 		if (toId(msg) in emotes) {
-			console.log("Emote Detected (" + toId(msg) + ")! Sending " + emotes[toId(msg)].emote + ".");
-			if (emotes[toId(msg)].type === "text") return choonbot.sendMessage(message.channel, emotes[toId(msg)].emote);
-			if (emotes[toId(msg)].type === "file") return choonbot.sendFile(message.channel, emotes[toId(msg)].emote, emotes[toId(msg)].name);
+			emoteCall = emotes[toId(msg)];
+			if (emoteCall.rng) {
+				rngval = Math.floor(Math.random()*emoteCall.rng.reduce(function (a, b) {return a + b;}));
+				for (let r = 0; r < emoteCall.rng.length; r++) {
+					rngsum += emoteCall.rng[r];
+					if (rngval < rngsum) {
+						emoteFin = {emote:emoteCall.emote[r], name:emoteCall.name[r]};
+						r = emoteCall.rng.length;
+					}
+				}
+			} else {
+				emoteFin = emotes[toId(msg)];
+			}
+			console.log("Emote Detected (" + toId(msg) + ")! Sending " + emoteFin.emote + ".");
+			return choonbot.sendFile(message.channel, emoteFin.emote, emoteFin.name);
 		}
 	}
 	if ((msg.split("🍡").length > 1 || msg[msg.length - 1] === "🍡") && !(message.channel.id in noSpam)) {
@@ -201,7 +230,7 @@ choonbot.on("message", function (message) {
 		return choonbot.sendMessage(message.channel, "🍡🍡DANGO PARTY🍡🍡");
 	}
 	if ((msg.split("(╯°□°）╯︵ ┻━┻").length > 1 || msg.substr(msg.length - 12, msg.length) === "(╯°□°）╯︵ ┻━┻") && !(message.channel.id in noSpam)) {
-		let tableflip = ["┬─┬﻿ ノ( ゜-゜ノ)", "(╯°□°)╯︵ ┻━┻ ︵ ╯(°□° ╯)", "┬─┬﻿ ︵ /(.□. \\）", "┬─┬ ノ( ^_^ノ)", "(╯°Д°）╯︵ /(.□ . \\)", "(/¯◡ ‿ ◡)/¯ ~ ┬─┬﻿", "ノ┬─┬ノ ︵ ( \\o°o)\\"]//, "ik that feel man, i hate it when reisen's in hentai too"]
+		let tableflip = ["┬─┬﻿ ノ( ゜-゜ノ)", "(╯°□°)╯︵ ┻━┻ ︵ ╯(°□° ╯)", "┬─┬﻿ ︵ /(.□. \\\\）", "┬─┬ ノ( ^_^ノ)", "(╯°Д°）╯︵ /(.□ . \\\\)", "(/¯◡ ‿ ◡)/¯ ~ ┬─┬﻿", "ノ┬─┬ノ ︵ ( \\\\o°o)\\\\"]//, "ik that feel man, i hate it when reisen's in hentai too"]
 		console.log("Tableflip");
 		return choonbot.sendMessage(message.channel, tableflip[Math.floor(Math.random()*tableflip.length)]);
 	}

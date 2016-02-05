@@ -509,66 +509,55 @@ exports.commands = {
 };
 exports.emotes = {
 	boo: {
-		type: "file",
 		emote: "./images/kogamy.png",
 		name: "boo.png"
 	},
 	denko: {
-		type: "text",
-		emote: "('.w.')"
+		emote: "./images/denko.jpg",
+		name: "denko.jpg"
 	},
 	hinaface: {
-		type: "file",
 		emote: "./images/hinaface.png",
 		name: "hinaface.png"
 	},
 	kogamy: {
-		type: "file",
 		emote: "./images/kogamy.png",
 		name: "kogamy.png"
 	},
 	lewd: {
-		type: "file",
 		emote: "./images/lewd.gif",
 		name: "lewd.gif"
 	},
 	mg: {
-		type: "file",
 		emote: "./images/mg.jpg",
 		name: "mg.jpg"
 	},
 	mok: {
-		type: "file",
 		emote: "./images/mokay.jpg",
 		name: "mok.jpg"
 	},
 	mokay: {
-		type: "file",
 		emote: "./images/mokay.jpg",
 		name: "mokay.jpg"
 	},
 	reisenbox: {
-		type: "file",
-		emote: "./images/reisenbox.png",
-		name: "reisenbox.png"
+		rng: [90, 10],
+		emote: ["./images/reisenbox.png", "./images/spoonsreisen.png"],
+		name: ["reisenbox.png", "spoonsreisen.png"]
 	},
 	reisenfacev: {
-		type: "file",
 		emote: "./images/reisenfacev.png",
 		name: "reisenfacev.png"
 	},
 	reisenfloof: {
-		type: "file",
 		emote: "./images/reisenfloof.png",
 		name: "reisenfloof.png"
 	},
 	reisenwut: {
-		type: "file",
 		emote: "./images/reisenwut.jpg",
 		name: "reisenwut.jpg"
 	},
 	shoutime: {
-		type: "file",
 		emote: "./images/shoutime.png",
 		name: "shoutime.png"
 	}
