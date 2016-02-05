@@ -101,6 +101,7 @@ setInterval(function () {
 choonbot.on("ready", function () {
 	console.log("Ready to go! ('.w.') C:" + choonbot.channels.length);
 	choonbot.setUsername("ChoonBot");
+	global.STARTTIME = new Date().getTime();
 });
 choonbot.on("disconnected", function () {
 	console.log("rip in kill [dc]");

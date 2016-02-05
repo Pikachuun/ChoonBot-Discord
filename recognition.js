@@ -104,6 +104,48 @@ exports.commands = {
 			}
 		}
 	},
+	uptime: {
+		command: function (message, args) {
+			let time = new Date().getTime();
+			let buffer = 0;
+			time -= STARTTIME;
+			let str = String(time%1000);
+			while (str.length < 3) str = "0" + str;
+			str = "." + str + " seconds`";
+			time = Math.floor(time/1000); //convert to seconds
+			if (time === 0) return choonbot.sendMessage(message.channel, "Uptime: `0" + str);
+			str = String(time%60) + str;
+			time = Math.floor(time/60); //convert to minutes
+			if (time === 0) return choonbot.sendMessage(message.channel, "Uptime: `" + str);
+			if (time%60 === 1) {
+				str = "1 minute, " + str;
+			} else {
+				str = String(time%60) + " minutes, " + str;
+			}
+			time = Math.floor(time/60); //convert to hours
+			if (time === 0) return choonbot.sendMessage(message.channel, "Uptime: `" + str);
+			if (time%24 === 1) {
+				str = "1 hour, " + str;
+			} else {
+				str = String(time%24) + " hours, " + str;
+			}
+			time = Math.floor(time/24); //convert to days
+			if (time === 0) return choonbot.sendMessage(message.channel, "Uptime: `" + str);
+			if (time%365 === 1) {
+				str = "1 day, " + str;
+			} else {
+				str = String(time%365) + " days, " + str;
+			}
+			buffer = Math.floor(time/365); //convert to years [shouldn't ever happen]
+			if (time === 0) return choonbot.sendMessage(message.channel, "Uptime: `" + str);
+			if (time === 1) {
+				str = "1 year, " + str;
+			} else {
+				str = String(time) + " years, " + str;
+			}
+			return choonbot.sendMessage(message.channel, "Uptime: `" + str);
+		}
+	},
 	
 	//info
 	
