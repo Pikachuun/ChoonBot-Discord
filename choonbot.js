@@ -26,10 +26,10 @@ global.getUsers = function () {
 	return usertxt;
 };
 global.uncacheTree = function (root) {
-	var uncache = [require.resolve(root)];
+	let uncache = [require.resolve(root)];
 	do {
-		var newuncache = [];
-		for (var i = 0; i < uncache.length; ++i) {
+		let newuncache = [];
+		for (let i = 0; i < uncache.length; ++i) {
 			if (require.cache[uncache[i]]) {
 				newuncache.push.apply(newuncache,
 					require.cache[uncache[i]].children.map(function (module) {
@@ -51,7 +51,7 @@ try {
 	console.log('config.js doesn\'t exist; try copying config-base.js to config.js.');
 	process.exit(-1);
 }
-for (var i in configBuffer) {
+for (let i in configBuffer) {
 	global[i] = configBuffer[i];
 }
 delete global.configBuffer;
@@ -101,7 +101,7 @@ setInterval(function () {
 choonbot.on("ready", function () {
 	console.log("Ready to go! ('.w.') C:" + choonbot.channels.length);
 	choonbot.setUsername("ChoonBot");
-	global.STARTTIME = new Date().getTime();
+	global.STARTTIME = Date.now();
 });
 choonbot.on("disconnected", function () {
 	console.log("rip in kill [dc]");
@@ -167,7 +167,7 @@ choonbot.on("message", function (message) {
 	if (message.everyoneMentioned) {
 		choonbot.reply(message, "YOU ARE LITERALLY THE WORST KIND OF PERSON FOR USING THE EVERYONE TAG");
 	} else {
-		for (var i in message.mentions) {
+		for (let i in message.mentions) {
 			if (message.mentions[i].id === selfID) choonbot.reply(message, "you called?");
 		}
 	}

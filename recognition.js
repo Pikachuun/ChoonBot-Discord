@@ -11,7 +11,7 @@ exports.commands = {
 		command: function (message, args) {
 			let buffer = args[0];
 			if (!buffer) return false;
-			for (var i = 0; i < args.length; i++) {
+			for (let i = 0; i < args.length; i++) {
 				if (i !== 0) buffer += ", " + args[i];
 			}
 			choonbot.sendMessage(message.channel, message.sender.mention() + " says: \"" + buffer + "\"");
@@ -23,7 +23,7 @@ exports.commands = {
 			if (!args[1]) return false;
 			let channelID = args[0];
 			let buffer = args[1];
-			for (var i = 1; i < args.length; i++) {
+			for (let i = 1; i < args.length; i++) {
 				if (i !== 1) buffer += ", " + args[i];
 			}
 			choonbot.sendMessage(args[0], buffer);
@@ -93,7 +93,7 @@ exports.commands = {
 			if (!(message.sender.id in whitelist)) return false;
 			let buffer = args[0];
 			if (!buffer) return false;
-			for (var i = 0; i < args.length; i++) {
+			for (let i = 0; i < args.length; i++) {
 				if (i !== 0) buffer += ", " + args[i];
 			}
 			buffer = buffer.replace(/`/g, "");
@@ -106,9 +106,8 @@ exports.commands = {
 	},
 	uptime: {
 		command: function (message, args) {
-			let time = new Date().getTime();
+			let time = Date.now() - STARTTIME;
 			let buffer = 0;
-			time -= STARTTIME;
 			let str = String(time%1000);
 			while (str.length < 3) str = "0" + str;
 			str = "." + str + " seconds`";
@@ -119,21 +118,21 @@ exports.commands = {
 			if (time === 0) return choonbot.sendMessage(message.channel, "Uptime: `" + str);
 			if (time%60 === 1) {
 				str = "1 minute, " + str;
-			} else {
+			} else if (time%60 > 0) {
 				str = String(time%60) + " minutes, " + str;
 			}
 			time = Math.floor(time/60); //convert to hours
 			if (time === 0) return choonbot.sendMessage(message.channel, "Uptime: `" + str);
 			if (time%24 === 1) {
 				str = "1 hour, " + str;
-			} else {
+			} else if (time%24 > 0) {
 				str = String(time%24) + " hours, " + str;
 			}
 			time = Math.floor(time/24); //convert to days
 			if (time === 0) return choonbot.sendMessage(message.channel, "Uptime: `" + str);
 			if (time%365 === 1) {
 				str = "1 day, " + str;
-			} else {
+			} else if (time%365 > 0) {
 				str = String(time%365) + " days, " + str;
 			}
 			buffer = Math.floor(time/365); //convert to years [shouldn't ever happen]
@@ -310,6 +309,25 @@ exports.commands = {
 			let meme = ["it was just a prank bro", "I wasn't dead I was just sleeping", "*awake*"]
 			choonbot.sendMessage(message.channel, meme[Math.floor(Math.random()*meme.length)]);
 			global.unripAlready[message.channel.id] = true;
+		}
+	},
+	pi: {
+		command: function (message, args) {
+			return commands.pie.command(message, args, true);
+		}
+	},
+	pie: {
+		command: function (message, args, math) {
+			let sender = message.sender.mention();
+			if (math) return choonbot.sendMessage(message.channel, "*throws a mathematical pie at " + sender + "*");
+			let pies = ["aloo pie", "apple crisp", "apple pie", "australian and new zealand meat pie", "bacon and egg pie", "bakewell tart", "banana cream pie", "banoffee pie", "bean pie", "bedfordshire clanger", "bisteeya", "blackberry pie", "black bottom pie", "black bun", "blueberry pie", "bob andy pie", "bougasta", "boysenberry pie", "bridie", "buko pie", "bumbleberry pie", "bundevara", "bündner nusstorte", "burek", "butter pie", "butter tart", "buttermilk pie", "canelé", "cantaloupe pie", "caramel tart", "cheesecake", "cheese pie", "cherry pie", "chess pie", "chicken and mushroom pie", "chiffon pie", "chinese pie", "coconut cream pie", "cookie cake pie", "corned beef pie", "cottage pie", "coulibiac", "cumberland pie", "curry pie", "curry puff", "custard tart", "derby pie", "egg tart", "empanda", "fish pie", "flan", "flapper pie", "fried pie", "gibanica", "green grape pie", "homity pie", "hornazo", "jamaican patty", "kalakukko", "karelian pastry", "key lime pie", "khachapurie", "killie pie", "knish", "kuchen", "lemon ice box pie", "lemon meringue pie", "manchester tart", "meat and potato pie", "meat pie", "melton mowbray pork pie", "mince pie", "mississippi mud pie", "natchitoches meat pie", "neapolitan cake pie", "neapolitan pie", "echpochmak", "pastafrola", "pastilla", "pasty", "peach pie", "pear tart", "pecan pie", "pie", "pie a la mode", "pirog", "pirozhki", "pork pie", "pot pie", "pumpkin pie", "qumeshtore me pete", "quiche", "raisin pie", "rappie pie", "raspberry pie", "razzleberry pie", "red velvet cake pie", "red velvet cheesecake pie", "reisen pie", "rhubarb pie", "sambusac", "saskatoonberry pie", "scotch pie", "sea-pie", "sfiha", "shaker lemon pie", "shepherd's pie", "shoofly pie", "soparnik", "southern tomato pie", "spanakopita", "stargazy pie", "steak and kidney pie", "steak pie", "strawberry pie", "strawberry rhubarb pie", "st. stephen's day pie", "sugar pie", "sweet potato pie", "tarta de santiago", "tiropita", "torta capresse", "tourtiére", "treacle tart", "vlaai", "watalappan", "woolton pie", "zelnik"];
+			let pie = pies[Math.floor(Math.random()*pies.length)];
+			if (pie[0] === "a" || pie[0] === "e" || pie[0] === "i" || pie[0] === "o" || pie[0] === "u") {
+				pie = "an " + pie;
+			} else {
+				pie = "a " + pie;
+			}
+			choonbot.sendMessage(message.channel, "*throws " + pie + " at " + sender + "*");
 		}
 	},
 	cri: {
