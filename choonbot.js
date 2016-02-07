@@ -114,6 +114,9 @@ choonbot.on("message", function (message) {
 	if (message.sender.id === selfID) return false;
 	if (message.channel.id in antipost) return false;
 	if (message.channel.server) {
+		for (let j = 0; j < message.channel.server.rolesOfUser(message.sender).length; j++) {
+			if (message.channel.server.rolesOfUser(message.sender)[j].name.toLowerCase() === "bots") return false; //not this again
+		}
 		if (message.channel.server.id in serverCrosstalk) {
 			let crosstalk = false;
 			for (let i = 0; i < serverCrosstalk[message.channel.server.id].length; i++) {
@@ -172,6 +175,7 @@ choonbot.on("message", function (message) {
 		}
 	}
 	msg = msgbackup;
+	if (msg.indexOf("*say") > -1 && msg.indexOf("*say2" < 0)) return choonbot.reply(message, "Here's a *say for you: ( ° ͜ʖ͡°)╭∩╮");
 	//emote block
 	let emoteCall = {};
 	let emoteFin = {};
