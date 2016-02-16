@@ -59,18 +59,16 @@ exports.commands = {
 			}
 		}
 	},
-	dump: {
+	whois: {
 		command: function (message, args) {
-			//return false; //disabled mostly
-			let buffer = message.mentions;
-			if (typeof buffer === "number" || typeof buffer === "string") {
-				console.log(buffer);
-			} else {
-				for (let i in buffer) {
-					console.log(i);
-				}
-			}
-			choonbot.sendMessage(message.channel, "dumped info about message.mentions");
+			if (args[0] === "*") return choonbot.sendMessage(message.channel, "I'd get info about an idiot but you probably know all about yourself");
+			if (!message.mentions) return choonbot.sendMessage(message.channel, "I kinda need someone mentione in order to get info about them...");
+			if (message.mentions.length > 1) return choonbot.sendMessage(message.channel, "Pick 1 person please.");
+			let mentioned = message.mentions[0];
+			let str = "Info about " + mentioned.mention() + ":\nID: `" + mentioned.id + "`";
+			if (mentioned.game) str += "\nPlaying " + mentioned.game.name;
+			if (mentioned.avatarURL) str += "\nAvatar URL: `" + mentioned.avatarURL + "`";
+			return choonbot.sendMessage(message.channel, str);
 		}
 	},
 	acceptinvite: {
@@ -347,6 +345,8 @@ exports.commands = {
 					if (message.mentions[lel].id === selfID) {
 						kek = false;
 						buffer = [];
+					} else if (message.mentions[lel].id === "116652461841711108" && message.mentions[lel].username.toLowerCase().substr(message.mentions[lel].username.length - 6) === "reiuji") { //special case: okuu is being pet
+						return choonbot.sendFile(message.channel, "./images/okuu-pet.gif", "okuu-pet.gif")
 					} else {
 						buffer[buffer.length] = message.mentions[lel].mention();
 					}
@@ -620,5 +620,9 @@ exports.emotes = {
 	shoutime: {
 		emote: "./images/shoutime.png",
 		name: "shoutime.png"
+	},
+	unyu: {
+		emote: "./images/unyu.png",
+		name: "unyu.png"
 	}
 };
