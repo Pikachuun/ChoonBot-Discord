@@ -219,11 +219,13 @@ exports.commands = {
 			if (isNaN(args[0]) || parseInt(args[0]) < 0 || parseInt(args[0]) != parseFloat(args[0])) return choonbot.sendMessage(message.channel, "I can only take positive integers.");
 			let avatarID = parseInt(args[0]);
 			//jpg files
-			let jpg = [true, false];
+			let jpg = [true, false, false, true, true];
 			if (avatarID >= jpg.length) return choonbot.sendMessage(message.channel, "That avatar doesn't exist yet.");
 			let avatarFile = (jpg[avatarID]) ? "./avatars/" + String(avatarID) + ".jpg" : "./avatars/" + String(avatarID) + ".png";
 			choonbot.setAvatar(fs.readFileSync(avatarFile));
-			choonbot.sendMessage(message.channel, "Avatar set!");
+			setTimeout(function () {
+				choonbot.sendMessage(message.channel, "Avatar set!");
+			}, 666);
 		}
 	},
 	dispavatar: {
@@ -232,7 +234,7 @@ exports.commands = {
 			if (isNaN(args[0]) || parseInt(args[0]) < 0 || parseInt(args[0]) != parseFloat(args[0])) return choonbot.sendMessage(message.channel, "I can only take positive integers.");
 			let avatarID = parseInt(args[0]);
 			//jpg files
-			let jpg = [true, false];
+			let jpg = [true, false, false, true, true];
 			if (avatarID >= jpg.length) return choonbot.sendMessage(message.channel, "That avatar doesn't exist yet.");
 			let avatarAttach = (jpg[avatarID]) ? "./avatars/" + String(avatarID) + ".jpg" : "./avatars/" + String(avatarID) + ".png";
 			let avatarName = (jpg[avatarID]) ? "avatar.jpg" : "avatar.png";
