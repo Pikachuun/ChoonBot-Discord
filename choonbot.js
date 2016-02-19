@@ -126,10 +126,9 @@ choonbot.on("message", function (message) {
 		}
 	}
 	let msg = message.content;
-	if (!verbose) {
-		console.log("Message Intercept in #" + message.channel.name + " from @" + message.sender.username + ": " + msg);
-	} else {
-		console.log("Message Intercept in " + message.channel + " from " + message.sender + ": " + msg);
+	console.log("Message Intercept in #" + message.channel.name + " from @" + message.sender.username + ": " + msg);
+	if (verbose) {
+		console.log("[CID:" + message.channel.id + "/SID:" + message.sender.id + "]");
 	}
 	let msgbackup = msg;
 	for (let i = 0; i < cmdS.length; i++) {
