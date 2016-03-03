@@ -176,9 +176,11 @@ exports.commands = {
 					choonbot.sendMessage(message.channel, "`morse encode, *`: Translates whatever you tell me into morse code.\n`morse decode, *`: Translates whatever you tell me from morse code.");
 				} else if (arg === "cri") {
 					choonbot.sendMessage(message.channel, "For those moments when you're really sad, I'll cry with you.");
+				} else if (arg === "pick") {
+					choonbot.sendMessage(message.channel, "Can't decide on something? That's ok, I'll decide for you! Use as many choices as you want.");
 				}
 			} else {
-				choonbot.sendMessage(message.channel, "Sup! I'm a bot made by Choon. He made me for fun, if you're upset let him know and I'll leave.\nCommand List:\nDev:`hello`,`help *`,`say *`,`echo *, *`\nGames:`game`\nMisc:`meme *`,`pet *`,`hug *`,`notice *`,`morse *`,`cri`\nMy command identifier is `*` or the vastly superior `('.w.') `. Put one of these before a command and at the beginning of your message. I separate arguments using `,` with a space at the end.\nFor help with specific commands use `help command`.\nI also can use emotes by surrounding the requested emote with `:`. For a list of emotes use `emotes` as an argument for this command.");
+				choonbot.sendMessage(message.channel, "Sup! I'm a bot made by Choon. He made me for fun, if you're upset let him know and I'll leave.\nCommand List:\nDev:`hello`,`help *`,`say *`,`echo *, *`\nGames:`game`\nMisc:`meme *`,`pet *`,`hug *`,`notice *`,`morse *`,`cri`,`pick *`\nMy command identifier is `*` or the vastly superior `('.w.') `. Put one of these before a command and at the beginning of your message. I separate arguments using `,` with a space at the end.\nFor help with specific commands use `help command`.\nI also can use emotes by surrounding the requested emote with `:`. For a list of emotes use `emotes` as an argument for this command.");
 			}
 		}
 	},
@@ -303,12 +305,28 @@ exports.commands = {
 			choonbot.sendMessage(message.channel, meatloaf);
 		}
 	},
-	unrip: {
+	choice: {
 		command: function (message, args) {
-			if (unripAlready[message.channel.id]) return false;
-			let meme = ["it was just a prank bro", "I wasn't dead I was just sleeping", "*awake*"]
-			choonbot.sendMessage(message.channel, meme[Math.floor(Math.random()*meme.length)]);
-			global.unripAlready[message.channel.id] = true;
+			return commands.pick.command(message, args);
+		}
+	},
+	choose: {
+		command: function (message, args) {
+			return commands.pick.command(message, args);
+		}
+	},
+	pick: {
+		command: function (message, args) {
+			if (args.length < 1 || !args[0]) return choonbot.sendMessage(message.channel, "uwotm8");
+			if (args[0] === "*" && args.length === 1) return choonbot.sendMessage(message.channel, "I choose: **to believe you're incredibly dense.**");
+			if (args.length < 2) return choonbot.sendMessage(message.channel, "That isn't really a choice.");
+			for (let i = 1; i < args.length; i++) {
+				for (let j = 0; j < i; j++) {
+					if (toId(args[i]) === toId(args[j])) return choonbot.sendMessage(message.channel, "Sorry, I only make fair decisions.");
+				}
+			}
+			let str = args[Math.floor(Math.random()*args.length)];
+			choonbot.sendMessage(message.channel, "I choose: **" + str + "**");
 		}
 	},
 	pi: {

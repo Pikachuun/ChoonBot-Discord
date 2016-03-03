@@ -70,7 +70,6 @@ http.createServer(function (req, res) {
 }).listen(process.env.PORT || 5000);
 setInterval(function () {
 	http.get("http://choonbot-discord.herokuapp.com");
-	console.log("Ping!");
 }, 300000);
 
 
@@ -166,6 +165,9 @@ choonbot.on("message", function (message) {
 	if (msg.toLowerCase() === "c") { //Press C to cri.
 		return commands.cri.command(message, []);
 	}
+	if (msg.toLowerCase() === "p") { //Press P to pet.
+		return commands.pet.command(message, []);
+	}
 	if (message.everyoneMentioned) {
 		choonbot.reply(message, "YOU ARE LITERALLY THE WORST KIND OF PERSON FOR USING THE EVERYONE TAG");
 	} else {
@@ -174,7 +176,7 @@ choonbot.on("message", function (message) {
 		}
 	}
 	msg = msgbackup;
-	if (msg.indexOf("*say") > -1 && msg.indexOf("*say2" < 0)) return choonbot.reply(message, "Here's a *say for you: ( ° ͜ʖ͡°)╭∩╮");
+	//if (msg.indexOf("*say") > -1 && msg.indexOf("*say2" < 0)) return choonbot.reply(message, "Here's a *say for you: ( ° ͜ʖ͡°)╭∩╮");
 	//emote block
 	let emoteCall = {};
 	let emoteFin = {};
