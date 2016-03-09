@@ -356,7 +356,7 @@ exports.commands = {
 	},
 	respects: {
 		command: function (message, args) {
-			choonbot.sendMessage(message.channel, message.sender.mention() + " has payed their respects.");
+			choonbot.sendMessage(message.channel, message.sender.mention() + " has paid their respects.");
 		}
 	},
 	pet: {
