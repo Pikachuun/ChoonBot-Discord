@@ -168,7 +168,7 @@ choonbot.on("message", function (message) {
 	if (msg.toLowerCase() === "p") { //Press P to pet.
 		return commands.pet.command(message, []);
 	}
-	if (msg.toLowerCase() === "f") { //Press F to pay respects
+	if (msg.toLowerCase() === "f" && message.server.id !== "110373943822540800") { //Press F to pay respects
 		return commands.respects.command(message, []);
 	}
 	if (message.everyoneMentioned) {
