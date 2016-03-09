@@ -354,6 +354,11 @@ exports.commands = {
 			choonbot.sendMessage(message.channel, cri[Math.floor(Math.random()*cri.length)]);
 		}
 	},
+	respects: {
+		command: function (message, args) {
+			choonbot.sendMessage(message.channel, message.sender.mention() + " has payed their respects.");
+		}
+	},
 	pet: {
 		command: function (message, args) {
 			if (args[0] === "*") return choonbot.sendMessage(message.channel, "I don't want to pet a star...");

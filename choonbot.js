@@ -168,6 +168,9 @@ choonbot.on("message", function (message) {
 	if (msg.toLowerCase() === "p") { //Press P to pet.
 		return commands.pet.command(message, []);
 	}
+	if (msg.toLowerCase() === "f") { //Press F to pay respects
+		return commands.respects.command(message, []);
+	}
 	if (message.everyoneMentioned) {
 		choonbot.reply(message, "YOU ARE LITERALLY THE WORST KIND OF PERSON FOR USING THE EVERYONE TAG");
 	} else {
