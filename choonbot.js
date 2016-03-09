@@ -168,8 +168,12 @@ choonbot.on("message", function (message) {
 	if (msg.toLowerCase() === "p") { //Press P to pet.
 		return commands.pet.command(message, []);
 	}
-	if (msg.toLowerCase() === "f" && message.server.id !== "110373943822540800") { //Press F to pay respects
-		return commands.respects.command(message, []);
+	if (msg.toLowerCase() === "f") { //Press F to pay respects
+		if (message.channel.server && message.channel.server.id !== "110373943822540800") {
+			return commands.respects.command(message, []);
+		} else if (!message.channel.server) {
+			return commands.respects.command(message, []);
+		}
 	}
 	if (message.everyoneMentioned) {
 		choonbot.reply(message, "YOU ARE LITERALLY THE WORST KIND OF PERSON FOR USING THE EVERYONE TAG");
