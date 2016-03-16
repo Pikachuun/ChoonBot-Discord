@@ -445,7 +445,7 @@ exports.commands = {
 			}
 		}
 	},
-	unspoon: {
+	/*unspoon: {
 		command: function (message, args) {
 			if (spoon) {
 				choonbot.setUsername("ChoonBot");
@@ -470,7 +470,7 @@ exports.commands = {
 				global.spoon = true;
 			}
 		}
-	},
+	},*/
 	fork: {
 		command: function (message, args) {
 			choonbot.sendMessage(message.channel, "ew forks");
