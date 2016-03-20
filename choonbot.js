@@ -159,19 +159,17 @@ choonbot.on("message", function (message) {
 			}
 		}
 	}
-	if (msg.toLowerCase() === "h") { //Press H to hug.
-		return commands.hug.command(message, []);
-	}
-	if (msg.toLowerCase() === "c") { //Press C to cri.
-		return commands.cri.command(message, []);
-	}
-	if (msg.toLowerCase() === "p") { //Press P to pet.
-		return commands.pet.command(message, []);
-	}
-	if (msg.toLowerCase() === "f") { //Press F to pay respects
-		if (message.channel.server && message.channel.server.id !== "110373943822540800") {
-			return commands.respects.command(message, []);
-		} else if (!message.channel.server) {
+	if (message.channel.server && message.channel.server.id !== "110373943822540800" || !message.channel.server) {
+		if (msg.toLowerCase() === "h") { //Press H to hug.
+			return commands.hug.command(message, []);
+		}
+		if (msg.toLowerCase() === "c") { //Press C to cri.
+			return commands.cri.command(message, []);
+		}
+		if (msg.toLowerCase() === "p") { //Press P to pet.
+			return commands.pet.command(message, []);
+		}
+		if (msg.toLowerCase() === "f") { //Press F to pay respects
 			return commands.respects.command(message, []);
 		}
 	}
