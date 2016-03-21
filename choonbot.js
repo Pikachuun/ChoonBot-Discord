@@ -70,6 +70,7 @@ http.createServer(function (req, res) {
 }).listen(process.env.PORT || 5000);
 setInterval(function () {
 	http.get("http://choonbot-discord.herokuapp.com");
+	http.get("http://reisenuinabot-psmaga.rhcloud.com"); //help a friend
 }, 300000);
 
 
