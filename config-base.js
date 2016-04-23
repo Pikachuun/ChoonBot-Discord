@@ -28,5 +28,4 @@ exports.cmdS = []; //Command symbols. Put one of these before the command!
 exports.emtS = ["", ""]; //Emote symbols. Format: [start, end].
 
 //And my login credentials are...
-exports.EMAIL = "";
-exports.PASSW = "";
+exports.TOKEN = "";

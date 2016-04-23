@@ -249,4 +249,4 @@ choonbot.on("message", function (message) {
 	}
 });
 
-choonbot.login(EMAIL, PASSW);
+choonbot.loginWithToken(TOKEN);
