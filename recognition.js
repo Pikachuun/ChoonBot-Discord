@@ -71,14 +71,14 @@ exports.commands = {
 			return choonbot.sendMessage(message.channel, str);
 		}
 	},
-	acceptinvite: {
+	/*acceptinvite: {
 		command: function (message, args) {
 			if (!(message.sender.id in whitelist)) return false;
 			if (!args[0]) return false;
 			choonbot.sendMessage(message.channel, "alright, I'm joining now!");
 			choonbot.joinServer(args[0]);
 		}
-	},
+	},*/
 	goaway: {
 		command: function (message, args) {
 			if (!(message.sender.id in whitelist)) return false;
@@ -307,12 +307,12 @@ exports.commands = {
 	},
 	choice: {
 		command: function (message, args) {
-			return commands.pick.command(message, args);
+			commands.pick.command(message, args);
 		}
 	},
 	choose: {
 		command: function (message, args) {
-			return commands.pick.command(message, args);
+			commands.pick.command(message, args);
 		}
 	},
 	pick: {
@@ -329,9 +329,18 @@ exports.commands = {
 			choonbot.sendMessage(message.channel, "I choose: **" + str + "**");
 		}
 	},
+	helix: {
+		command: function (message, args) {
+			if (args.length < 1 || !args[0]) return choonbot.sendMessage(message.channel, "you're supposed to say something to the helix first");
+			if (args[0] === "*") return choonbot.sendMessage(message.channel, "The helix fossil says: **why.**");
+			if (Math.floor(Math.random()*128) === 127) return choonbot.sendMessage(message.channel, "The helix fossil says: **Go ask RoboNitori instead.**");
+			let praise = ["It is certain", "It is decidedly so", "Without a doubt", "Yes definitely", "You may rely on it", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Reply hazy try again", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again ", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", "Very doubtful", "no.", "START", "A", "B", "UP", "DOWN", "LEFT", "RIGHT", "SELECT"];
+			choonbot.sendMessage(message.channel, "The helix fossil says: **" + praise[Math.floor(Math.random()*praise.length)] + "**");
+		}
+	}
 	pi: {
 		command: function (message, args) {
-			return commands.pie.command(message, args, true);
+			commands.pie.command(message, args, true);
 		}
 	},
 	pie: {
@@ -355,8 +364,9 @@ exports.commands = {
 		}
 	},
 	respects: {
-		command: function (message, args) {
-			choonbot.sendMessage(message.channel, message.sender.mention() + " has paid their respects.");
+		command: function (message, args, wavesine) {
+			if (!wavesine) return choonbot.sendMessage(message.channel, message.sender.mention() + " has paid their respects.");
+			return choonbot.sendMessage(message.channel, "˙sʇɔǝdsǝɹ ɹıǝɥʇ pıɐd sɐɥ ǝuıS‾ǝʌɐM 'ןɐɹıɯp∀ ɹɐun˥@");
 		}
 	},
 	pet: {
@@ -382,6 +392,7 @@ exports.commands = {
 			}
 			if (buffer.length === 0) {
 				let pet = ["*is pet*", "*appreciates the petting*", "*loves the petting*", "*reluctantly is pet*", "*cute choonbot noises*", "*demands you pet him more*", "*sensually moans*", "*awkwardly blushes*", "*floofs*", "*sputters*"];
+				if (message.channel.server && message.channel.server.id === "161058992699867136") pet = ["*sensually moans*"]; //special case
 				return choonbot.sendMessage(message.channel, pet[Math.floor(Math.random()*pet.length)]);
 			}
 			if (buffer.length === 1) {

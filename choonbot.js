@@ -174,6 +174,9 @@ choonbot.on("message", function (message) {
 		if (msg.toLowerCase() === "f") { //Press F to pay respects
 			return commands.respects.command(message, []);
 		}
+		if (msg === "ɟ" && message.sender.id === "90956503476883456") { //Wavesine
+			return commands.respects.command(message, [], true);
+		}
 	}
 	if (message.everyoneMentioned) {
 		choonbot.reply(message, "YOU ARE LITERALLY THE WORST KIND OF PERSON FOR USING THE EVERYONE TAG");
