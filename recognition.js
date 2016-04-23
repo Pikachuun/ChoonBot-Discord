@@ -336,7 +336,7 @@ exports.commands = {
 	},
 	helix: {
 		command: function (message, args, dome) {
-			let fossil = (dome) ? "helix" : "dome";
+			let fossil = (dome) ? "dome" : "helix";
 			if (!args || args.length < 1 || !args[0]) return choonbot.sendMessage(message.channel, "you're supposed to say something to the " + fossil + " fossil first");
 			if (args[0] === "*") return choonbot.sendMessage(message.channel, "The " + fossil + " fossil says: **why.**");
 			if (Math.floor(Math.random()*128) === 127) return choonbot.sendMessage(message.channel, "The " + fossil + " fossil says: **Go ask RoboNitori instead.**");
