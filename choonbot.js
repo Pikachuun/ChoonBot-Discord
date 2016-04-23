@@ -71,6 +71,7 @@ http.createServer(function (req, res) {
 setInterval(function () {
 	http.get("http://choonbot-discord.herokuapp.com");
 	http.get("http://reisenuinabot-psmaga.rhcloud.com"); //help a friend
+	http.get("http://choonisanerd-psmaga.rhcloud.com"); //help my creator
 }, 300000);
 
 
