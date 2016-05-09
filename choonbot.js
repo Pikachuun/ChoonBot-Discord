@@ -19,12 +19,12 @@ global.toId = function (str) {
 	if (typeof str !== 'string' && typeof str !== 'number') return '';
 	return ('' + str).toLowerCase().replace(/[^a-z0-9]+/g, '');
 };
-global.getUsers = function () {
+/*global.getUsers = function () {
 	let usertxt = fs.readFileSync('./users.txt').toString();
 	if (!usertxt.split('raisin is best waifu and if you disagree your bad!!!!!!11!!!\n\n')[1]) return false;
 	usertxt = usertxt.split('raisin is best waifu and if you disagree your bad!!!!!!11!!!\n\n')[1];
 	return usertxt;
-};
+};*/
 global.uncacheTree = function (root) {
 	let uncache = [require.resolve(root)];
 	do {
@@ -56,12 +56,23 @@ for (let i in configBuffer) {
 }
 delete global.configBuffer;
 global.games = {};
-global.unripAlready = {};
-global.spoon = false;
+global.rng = function (num) { //about time amirite
+	return Math.floor(Math.random()*num);
+};
+global.wavesine = function (str) { //affectionately named
+	let rts = "";
+	let convert = "~}|{zʎxʍʌnʇsɹbdouɯๅʞſıɥɓɟəpɔqɐ,‾v]/[Z⅄XMΛ∩⊥SଧῸԀONWႨʞſIH⅁ℲƎႧƆઘ∀@¿>=<;:68L9૬hƐՇƖ0\\·-ʻ+ₓ)(ˌ⅋%$#ˌ¡ ";
+	let code = 0;
+	for (let i = str.length - 1; i > -1; i--) {
+		code = str.charCodeAt(i);
+		rts += (code < 127 && code > 31) ? convert[126 - code] : str[i];
+	}
+	return rts;
+}
 //check for users.txt
-let users = fs.readFileSync('./users.txt');
+//let users = fs.readFileSync('./users.txt');
 //ok
-users = getUsers();
+//users = getUsers();
 //create http server for heroku, and prevent it from idling
 let http = require('http');
 http.createServer(function (req, res) { 
@@ -110,7 +121,7 @@ choonbot.on("disconnected", function () {
 });
 choonbot.on("message", function (message) {
 	//Update users
-	users = getUsers();
+	//users = getUsers();
 	//No need to check ourselves. We already rekt ourselves.
 	if (message.sender.id === selfID) return false;
 	if (message.channel.id in antipost) return false;
@@ -174,8 +185,11 @@ choonbot.on("message", function (message) {
 		if (msg.toLowerCase() === "f") { //Press F to pay respects
 			return commands.respects.command(message, []);
 		}
-		if (msg === "ɟ" && message.sender.id === "90956503476883456") { //Wavesine
-			return commands.respects.command(message, [], true);
+		if (message.sender.id === "90956503476883456") { //wavesine shenanigans
+			if (msg === "ɥ") return commands.hug.command(message, [], true);
+			if (msg === "ɔ") return commands.cri.command(message, [], true);
+			if (msg === "d") return commands.pet.command(message, [], true);
+			if (msg === "ɟ") return commands.respects.command(message, [], true);
 		}
 	}
 	if (message.everyoneMentioned) {
@@ -248,7 +262,7 @@ choonbot.on("message", function (message) {
 	if ((msg.split("(╯°□°）╯︵ ┻━┻").length > 1 || msg.substr(msg.length - 12, msg.length) === "(╯°□°）╯︵ ┻━┻") && !(message.channel.id in noSpam)) {
 		let tableflip = ["┬─┬﻿ ノ( ゜-゜ノ)", "(╯°□°)╯︵ ┻━┻ ︵ ╯(°□° ╯)", "┬─┬﻿ ︵ /(.□. \\\\）", "┬─┬ ノ( ^_^ノ)", "(╯°Д°）╯︵ /(.□ . \\\\)", "(/¯◡ ‿ ◡)/¯ ~ ┬─┬﻿", "ノ┬─┬ノ ︵ ( \\\\o°o)\\\\"]//, "ik that feel man, i hate it when reisen's in hentai too"]
 		console.log("Tableflip");
-		return choonbot.sendMessage(message.channel, tableflip[Math.floor(Math.random()*tableflip.length)]);
+		return choonbot.sendMessage(message.channel, tableflip[rng(tableflip.length)]);
 	}
 });
 

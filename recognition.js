@@ -148,7 +148,7 @@ exports.commands = {
 	
 	help: {
 		command: function (message, args) {
-			if (Math.floor(Math.random()*22) === 11) return choonbot.sendMessage(message.channel, "nobody can help you. you must face the gazebo alone.");
+			if (rng(22) === 11) return choonbot.sendMessage(message.channel, "nobody can help you. you must face the gazebo alone.");
 			if (args[0]) {
 				let arg = toId(args[0]);
 				if (arg === "emotes") {
@@ -299,7 +299,7 @@ exports.commands = {
 			let meatloaf = "";
 			let arr = [["M", "E", "A", "T", "L", "O", "A", "F"], ["m", "e", "a", "t", "l", "o", "a", "f"]];
 			for (let i = 0; i < 8; i++) {
-				ride = Math.floor(Math.random()*2);
+				ride = rng(2);
 				meatloaf += arr[ride][i];
 			}
 			choonbot.sendMessage(message.channel, meatloaf);
@@ -325,7 +325,7 @@ exports.commands = {
 					if (toId(args[i]) === toId(args[j])) return choonbot.sendMessage(message.channel, "Sorry, I only make fair decisions.");
 				}
 			}
-			let str = args[Math.floor(Math.random()*args.length)];
+			let str = args[rng(args.length)];
 			choonbot.sendMessage(message.channel, "I choose: **" + str + "**");
 		}
 	},
@@ -339,9 +339,9 @@ exports.commands = {
 			let fossil = (dome) ? "dome" : "helix";
 			if (!args || args.length < 1 || !args[0]) return choonbot.sendMessage(message.channel, "you're supposed to say something to the " + fossil + " fossil first");
 			if (args[0] === "*") return choonbot.sendMessage(message.channel, "The " + fossil + " fossil says: **why.**");
-			if (Math.floor(Math.random()*128) === 127) return choonbot.sendMessage(message.channel, "The " + fossil + " fossil says: **Go ask RoboNitori instead.**");
+			if (rng(128) === 127) return choonbot.sendMessage(message.channel, "The " + fossil + " fossil says: **Go ask RoboNitori instead.**");
 			let praise = ["It is certain", "It is decidedly so", "Without a doubt", "Yes definitely", "You may rely on it", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Reply hazy try again", "Ask again later", "Better not tell you now", "Cannot predict now", "Concentrate and ask again ", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", "Very doubtful", "no.", "START", "A", "B", "UP", "DOWN", "LEFT", "RIGHT", "SELECT"];
-			choonbot.sendMessage(message.channel, "The " + fossil + " fossil says: **" + praise[Math.floor(Math.random()*praise.length)] + "**");
+			choonbot.sendMessage(message.channel, "The " + fossil + " fossil says: **" + praise[rng(praise.length)] + "**");
 		}
 	},
 	pi: {
@@ -354,7 +354,7 @@ exports.commands = {
 			let sender = message.sender.mention();
 			if (math) return choonbot.sendMessage(message.channel, "*throws a mathematical pie at " + sender + "*");
 			let pies = ["aloo pie", "apple crisp", "apple pie", "australian and new zealand meat pie", "bacon and egg pie", "bakewell tart", "banana cream pie", "banoffee pie", "bean pie", "bedfordshire clanger", "bisteeya", "blackberry pie", "black bottom pie", "black bun", "blueberry pie", "bob andy pie", "bougasta", "boysenberry pie", "bridie", "buko pie", "bumbleberry pie", "bundevara", "bündner nusstorte", "burek", "butter pie", "butter tart", "buttermilk pie", "canelé", "cantaloupe pie", "caramel tart", "cheesecake", "cheese pie", "cherry pie", "chess pie", "chicken and mushroom pie", "chiffon pie", "chinese pie", "coconut cream pie", "cookie cake pie", "corned beef pie", "cottage pie", "coulibiac", "cumberland pie", "curry pie", "curry puff", "custard tart", "derby pie", "egg tart", "empanda", "fish pie", "flan", "flapper pie", "fried pie", "gibanica", "green grape pie", "homity pie", "hornazo", "jamaican patty", "kalakukko", "karelian pastry", "key lime pie", "khachapurie", "killie pie", "knish", "kuchen", "lemon ice box pie", "lemon meringue pie", "manchester tart", "meat and potato pie", "meat pie", "melton mowbray pork pie", "mince pie", "mississippi mud pie", "natchitoches meat pie", "neapolitan cake pie", "neapolitan pie", "echpochmak", "pastafrola", "pastilla", "pasty", "peach pie", "pear tart", "pecan pie", "pie", "pie a la mode", "pirog", "pirozhki", "pork pie", "pot pie", "pumpkin pie", "qumeshtore me pete", "quiche", "raisin pie", "rappie pie", "raspberry pie", "razzleberry pie", "red velvet cake pie", "red velvet cheesecake pie", "reisen pie", "rhubarb pie", "sambusac", "saskatoonberry pie", "scotch pie", "sea-pie", "sfiha", "shaker lemon pie", "shepherd's pie", "shoofly pie", "soparnik", "southern tomato pie", "spanakopita", "stargazy pie", "steak and kidney pie", "steak pie", "strawberry pie", "strawberry rhubarb pie", "st. stephen's day pie", "sugar pie", "sweet potato pie", "tarta de santiago", "tiropita", "torta capresse", "tourtiére", "treacle tart", "vlaai", "watalappan", "woolton pie", "zelnik"];
-			let pie = pies[Math.floor(Math.random()*pies.length)];
+			let pie = pies[rng(pies.length)];
 			if (pie[0] === "a" || pie[0] === "e" || pie[0] === "i" || pie[0] === "o" || pie[0] === "u") {
 				pie = "an " + pie;
 			} else {
@@ -364,19 +364,21 @@ exports.commands = {
 		}
 	},
 	cri: {
-		command: function (message, args) {
+		command: function (message, args, ws) {
+			let sender = (ws) ? "@Lunar Admiral, Wave_Sine" : message.sender.mention();
 			let cri = [";_;", ";_;7", "*cries softly*", "BibleThump", "bibolfamp", ";~;", ";-;", "(;_ʖ;)", "*runs up to " + message.sender.mention() + "'s and cries on their shoulder*", "*sobs*"];
-			choonbot.sendMessage(message.channel, cri[Math.floor(Math.random()*cri.length)]);
+			if (ws) return choonbot.sendMessage(message.channel, wavesine(cri[rng(cri.length)]));
+			return choonbot.sendMessage(message.channel, cri[rng(cri.length)]);
 		}
 	},
 	respects: {
-		command: function (message, args, wavesine) {
-			if (!wavesine) return choonbot.sendMessage(message.channel, message.sender.mention() + " has paid their respects.");
-			return choonbot.sendMessage(message.channel, "˙sʇɔǝdsǝɹ ɹıǝɥʇ pıɐd sɐɥ ǝuıS‾ǝʌɐM 'ןɐɹıɯp∀ ɹɐun˥@");
+		command: function (message, args, ws) {
+			if (ws) return choonbot.sendMessage(message.channel, "˙sʇɔǝdsǝɹ ɹıǝɥʇ pıɐd sɐɥ ǝuıS‾ǝʌɐM 'ןɐɹıɯp∀ ɹɐun˥@");
+			return choonbot.sendMessage(message.channel, message.sender.mention() + " has paid their respects.");
 		}
 	},
 	pet: {
-		command: function (message, args) {
+		command: function (message, args, ws) {
 			if (args[0] === "*") return choonbot.sendMessage(message.channel, "I don't want to pet a star...");
 			let buffer = [];
 			let kek = true;
@@ -399,7 +401,8 @@ exports.commands = {
 			if (buffer.length === 0) {
 				let pet = ["*is pet*", "*appreciates the petting*", "*loves the petting*", "*reluctantly is pet*", "*cute choonbot noises*", "*demands you pet him more*", "*sensually moans*", "*awkwardly blushes*", "*floofs*", "*sputters*"];
 				if (message.channel.server && message.channel.server.id === "161058992699867136") pet = ["*sensually moans*"]; //special case
-				return choonbot.sendMessage(message.channel, pet[Math.floor(Math.random()*pet.length)]);
+				if (ws) return choonbot.sendMessage(message.channel, wavesine(pet[rng(pet.length)]));
+				return choonbot.sendMessage(message.channel, pet[rng(pet.length)]);
 			}
 			if (buffer.length === 1) {
 				choonbot.sendMessage(message.channel, "*pets " + buffer[0] + "*");
@@ -417,12 +420,12 @@ exports.commands = {
 		}
 	},
 	hug: {
-		command: function (message, args) {
+		command: function (message, args, ws) {
 			if (args[0] === "*") return choonbot.sendMessage(message.channel, "hugging a star would hurt...");
 			let buffer = [];
 			let kek = true;
 			let lel = 0;
-			let sender = message.sender.mention();
+			let sender = (ws) ? "@Lunar Admiral, Wave_Sine" : message.sender.mention();
 			while (kek) {
 				if (message.mentions[lel]) {
 					if (message.mentions[lel].id === selfID) {
@@ -441,7 +444,8 @@ exports.commands = {
 			}
 			if (buffer.length === 0) {
 				let hug = ["*is hugged*", "*hugs back*", "*loves " + sender + "'s hug*", "*hugs " + sender + " back and breaks away*\nIt's not that I wanted you to hug me or anything, you baka...", "*cute choonbot noises*", "*gives " + sender + " a tight hug*", "*hugs " + sender + " back and kisses them on the cheek*", "*awkwardly blushes and hugs " + sender + " back*", "*floofs*", "*snuggles with " + sender + "*"];
-				return choonbot.sendMessage(message.channel, hug[Math.floor(Math.random()*hug.length)]);
+				if (ws) return choonbot.sendMessage(message.channel, wavesine(hug[rng(hug.length)]));
+				return choonbot.sendMessage(message.channel, hug[rng(hug.length)]);
 			}
 			if (buffer.length === 1) {
 				if (buffer[0] === "self") {
@@ -460,6 +464,12 @@ exports.commands = {
 				}
 				choonbot.sendMessage(message.channel, output + "!");
 			}
+		}
+	},
+	succ: {
+		command: function (message, args) {
+			if (!message.channel.server || message.channel.server.id !== "148262278356008960") return false;
+			choonbot.sendMessage(message.channel, "succ");
 		}
 	},
 	/*unspoon: {
@@ -531,7 +541,7 @@ exports.commands = {
 		isHmm: true,
 		command: function (message, args) {
 			let hmm = ["hmm", "hmm...", "hm?", "mmh", "hmmmmmmmmmmmm", "hmm hmm!", "hmmmh"];
-			choonbot.sendMessage(message.channel, hmm[Math.floor(Math.random()*hmm.length)]);
+			choonbot.sendMessage(message.channel, hmm[rng(hmm.length)]);
 		}
 	},
 	meme: { //PogChamp
@@ -546,10 +556,10 @@ exports.commands = {
 					return choonbot.sendMessage(message.channel, "(╭ರ_⊙)");
 				} else if (arg === "lenny") {
 					let lenny = ["( ͡° ͜ʖ ͡°)", "( ͠° ͟ʖ ͡°)", "ᕦ( ͡° ͜ʖ ͡°)ᕤ", "( ͡~ ͜ʖ ͡°)", "( ͡o ͜ʖ ͡o)", "͡° ͜ʖ ͡ -", "( ͡͡ ° ͜ ʖ ͡ °)", "( ͡ ͡° ͡°  ʖ ͡° ͡°)", "(ง ͠° ͟ل͜ ͡°)ง", "( ͡° ͜ʖ ͡ °)", "(ʖ ͜° ͜ʖ)", "[ ͡° ͜ʖ ͡°]", "( ͡o ͜ʖ ͡o)", "{ ͡• ͜ʖ ͡•}", "( ͡° ͜V ͡°)", "( ͡^ ͜ʖ ͡^)", "( ‾ʖ̫‾)", "( ͡°╭͜ʖ╮͡° )", "ᕦ( ͡°╭͜ʖ╮͡° )ᕤ", "─=≡Σᕕ( ͡° ͜ʖ ͡°)ᕗ"];
-					return choonbot.sendMessage(message.channel, lenny[Math.floor(Math.random()*lenny.length)]);
+					return choonbot.sendMessage(message.channel, lenny[rng(lenny.length)]);
 				} else if (arg === "xd") {
 					let xd = ["xd", "Xd", "xD", "XD"];
-					return choonbot.sendMessage(message.channel, xd[Math.floor(Math.random()*xd.length)]);
+					return choonbot.sendMessage(message.channel, xd[rng(xd.length)]);
 				} else if (arg === ":^)") {
 					return choonbot.sendMessage(message.channel, ':^)');
 				}
