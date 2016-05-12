@@ -325,8 +325,8 @@ exports.commands = {
 			let str = "You rolled ";
 			let buf = 0;
 			let tot = 0;
+			if (!args || !args[0]) args = ["1d6p0"];
 			args = args[0].toLowerCase(); //maybe multiple roll options will pop in the future?
-			if (!args) args = "1d6p0";
 			if (args.indexOf("d") === -1) args = "1d" + args;
 			if (args.indexOf("+") > -1 || args.indexOf("-") > -1) {
 				if (args.indexOf("p") > -1 || args.indexOf("m") > -1) return choonbot.sendMessage(message.channel, "nice try but you can't mix signs");
