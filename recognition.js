@@ -366,11 +366,11 @@ exports.commands = {
 					str += buf;
 					if (j === opt[0] - 1) {
 						if (opt[2] === 0) {
-							str += "` for a total of " String(tot) + "!";
+							str += "` for a total of " + String(tot) + "!";
 						} else if (opt[2] > 0) {
-							str += "` and " + opt[2] + " was added for a total of " String(tot + arg[2]) + "!";
+							str += "` and " + opt[2] + " was added for a total of " + String(tot + arg[2]) + "!";
 						} else {
-							str += "` and " + opt[2] + " was subtracted for a total of " String(tot - arg[2]) + "!";
+							str += "` and " + opt[2] + " was subtracted for a total of " + String(tot - arg[2]) + "!";
 						}
 					} else {
 						str += ",";
