@@ -243,11 +243,9 @@ exports.commands = {
 			choonbot.sendFile(message.channel, avatarAttach, avatarName);
 		}
 	},
-	
-	//the dankest of memes.
-	
 	morse: {
 		command: function (message, args) {
+			if (!args || !args[0]) return false;
 			if (args[0] === "*") return choonbot.sendMessage(message.channel, "._.");
 			if (args[0].toLowerCase() !== "encode" && args[0].toLowerCase() !== "decode" || args.length < 2) return false;
 			if (args[1] === "*") return choonbot.sendMessage(message.channel, "...");
@@ -292,19 +290,6 @@ exports.commands = {
 			}
 		}
 	},
-	meatloaf: {
-		command: function (message, args) {
-			if (!(message.channel.id === "139023144387084288" || message.channel.id in absoluteChannel)) return false;
-			let ride = 0;
-			let meatloaf = "";
-			let arr = [["M", "E", "A", "T", "L", "O", "A", "F"], ["m", "e", "a", "t", "l", "o", "a", "f"]];
-			for (let i = 0; i < 8; i++) {
-				ride = rng(2);
-				meatloaf += arr[ride][i];
-			}
-			choonbot.sendMessage(message.channel, meatloaf);
-		}
-	},
 	choice: {
 		command: function (message, args) {
 			commands.pick.command(message, args);
@@ -327,6 +312,88 @@ exports.commands = {
 			}
 			let str = args[rng(args.length)];
 			choonbot.sendMessage(message.channel, "I choose: **" + str + "**");
+		}
+	},
+	dice: {
+		command: function (message, args) {
+			commands.roll.command(message, args);
+		}
+	},
+	roll: {
+		command: function (message, args) {
+			let opt = [];
+			let str = "You rolled ";
+			let buf = 0;
+			let tot = 0;
+			args = args[0].toLowerCase(); //maybe multiple roll options will pop in the future?
+			if (!args) args = "1d6p0";
+			if (args.indexOf("d") === -1) args = "1d" + args;
+			if (args.indexOf("+") > -1 || args.indexOf("-") > -1) {
+				if (args.indexOf("p") > -1 || args.indexOf("m") > -1) return choonbot.sendMessage(message.channel, "nice try but you can't mix signs");
+				if (args.indexOf("+") > -1 && args.indexOf("-") > -1) return choonbot.sendMessage(message.channel, "make up your mind, which sign do you want");
+				if (args.indexOf("-") === 0) return choonbot.sendMessage(message.channel, "you can't roll a negative amount of dice");
+				if (args.indexOf("+") === 0) return choonbot.sendMessage(message.channel, "you don't need the +, get rid of it");
+				buf = (args.indexOf("-") > -1) ? -args.indexOf("-") : args.indexOf("+");
+				if (buf < 0) {
+					if (args.lastIndexOf("-") !== -buf) return choonbot.sendMessage(message.channel, "you only need 1 sign, which should go after the roll.");
+					args = args.substr(0, -buf) + "m" + args.substr(-buf + 1);
+				} else {
+					if (args.lastIndexOf("+") !== buf) return choonbot.sendMessage(message.channel, "you only need 1 sign, which should go after the roll.");
+					args = args.substr(0, buf) + "p" + args.substr(buf + 1);
+				}
+			} else if (args.indexOf("p") === -1 && args.indexOf("m") === -1) {
+				args += "p0";
+			}
+			args = toId(args);
+			if (args.indexOf("m") > -1) {
+				opt = [Number(args.split("d")[0]), Number(args.split("d")[1].split("m")[0]), Number(args.split("m")[1])];
+			} else {
+				opt = [Number(args.split("d")[0]), Number(args.split("d")[1].split("p")[0]), Number(args.split("p")[1])];
+			}
+			if (isNaN(opt[0]) || isNaN(opt[1]) || isNaN(opt[2])) return choonbot.sendMessage(message.channel, "??????????????");
+			if (opt[0] < 1) return choonbot.sendMessage(message.channel, "i'm pretty sure you can't roll no dice");
+			if (opt[0] > 64) return choonbot.sendMessage(message.channel, "how many dice do you need to roll sweet jesus man");
+			if (opt[1] < 1) return choonbot.sendMessage(message.channel, "dice can't have no sides try again"); //there ARE actually 1-sided dice.
+			if (opt[1] > 144) return choonbot.sendMessage(message.channel, "well, I'm not sure a die with that many sides exists yet...");
+			for (let j = 0; j < opt[0]; j++) {
+				buf = rng(opt[1]) + 1;
+				tot += buf;
+				buf = String(buf);
+				if (opt[0] === 1) {
+					str += "`" + buf + "`!";
+				} else {
+					if (j === 0) str += "`";
+					str += buf;
+					if (j === opt[0] - 1) {
+						if (opt[2] === 0) {
+							str += "` for a total of " String(tot) + "!";
+						} else if (opt[2] > 0) {
+							str += "` and " + opt[2] + " was added for a total of " String(tot + arg[2]) + "!";
+						} else {
+							str += "` and " + opt[2] + " was subtracted for a total of " String(tot - arg[2]) + "!";
+						}
+					} else {
+						str += ",";
+					}
+				}
+			}
+			choonbot.sendMessage(message.channel, str);
+		}
+	},
+	
+	//the dankest of memes.
+
+	meatloaf: {
+		command: function (message, args) {
+			if (!(message.channel.id === "139023144387084288" || message.channel.id in absoluteChannel)) return false;
+			let ride = 0;
+			let meatloaf = "";
+			let arr = [["M", "E", "A", "T", "L", "O", "A", "F"], ["m", "e", "a", "t", "l", "o", "a", "f"]];
+			for (let i = 0; i < 8; i++) {
+				ride = rng(2);
+				meatloaf += arr[ride][i];
+			}
+			choonbot.sendMessage(message.channel, meatloaf);
 		}
 	},
 	dome: {
@@ -464,6 +531,14 @@ exports.commands = {
 				}
 				choonbot.sendMessage(message.channel, output + "!");
 			}
+		}
+	},
+	kiss: { //I was asked to do this okay
+		command: function (message, args, ws) {
+			if (!message.sender || message.sender.id !== "91184988610895872") return false;
+			let sender = message.sender.mention();
+			let kiss = ["*blushes*", "*kisses" + sender + " back*", "*moans a bit*", "*kisses " + sender + " back then slaps them*\nD-don't get the wrong idea, it's not that I kissed you because I love you or anything, y-you baka...", "*cute choonbot noises*", "*passionately embraces and kisses" + sender + "*", "*sputters*"];
+			choonbot.sendMessage(message.channel, kiss[rng(kiss.length)]);
 		}
 	},
 	succ: {

@@ -185,6 +185,9 @@ choonbot.on("message", function (message) {
 		if (msg.toLowerCase() === "f") { //Press F to pay respects
 			return commands.respects.command(message, []);
 		}
+		if (msg.toLowerCase() === "k") { //Press K to kiss... maybe
+			return commands.kiss.command(message, []);
+		}
 		if (message.sender.id === "90956503476883456") { //wavesine shenanigans
 			if (msg === "ɥ") return commands.hug.command(message, [], true);
 			if (msg === "ɔ") return commands.cri.command(message, [], true);
