@@ -195,13 +195,13 @@ choonbot.on("message", function (message) {
 			if (msg === "ɟ") return commands.respects.command(message, [], true);
 		}
 	}
-	if (message.everyoneMentioned) {
+	/*if (message.everyoneMentioned) {
 		choonbot.reply(message, "YOU ARE LITERALLY THE WORST KIND OF PERSON FOR USING THE EVERYONE TAG");
-	} else {
+	} else {*/
 		for (let i in message.mentions) {
 			if (message.mentions[i].id === selfID) choonbot.reply(message, "you called?");
 		}
-	}
+  //}
 	msg = msgbackup;
 	//if (msg.indexOf("*say") > -1 && msg.indexOf("*say2" < 0)) return choonbot.reply(message, "Here's a *say for you: ( ° ͜ʖ͡°)╭∩╮");
 	//emote block

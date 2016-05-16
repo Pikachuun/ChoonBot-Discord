@@ -344,7 +344,7 @@ exports.commands = {
 			} else if (args.indexOf("p") === -1 && args.indexOf("m") === -1) {
 				args += "p0";
 			}
-			args = toId(args);
+			if (args !== toId(args)) return choonbot.sendMessage(message.channel, "you probably shouldn't use any spaces or special characters");
 			if (args.indexOf("m") > -1) {
 				opt = [Number(args.split("d")[0]), Number(args.split("d")[1].split("m")[0]), Number(args.split("m")[1])];
 			} else {
@@ -580,7 +580,7 @@ exports.commands = {
 	},
 	notice: {
 		command: function (message, args) {
-			if (message.everyoneMentioned) return choonbot.reply(message, "NICE TRY, NERD");
+			if (message.everyoneMentioned) return choonbot.reply(message, "soka");
 			if (args[0] === "*") return choonbot.sendMessage(message.channel, "can't notice stars sorry");
 			let buffer = [];
 			let output = "ChoonBot-senpai notices you, ";
@@ -727,6 +727,10 @@ exports.emotes = {
 		emote: "./images/mokay.jpg",
 		name: "mokay.jpg"
 	},
+	mokoo: {
+		emote: "./images/mokoo.png",
+		name: "mokoo.png"
+	},
 	reisenbox: {
 		rng: [90, 10],
 		emote: ["./images/reisenbox.png", "./images/spoonsreisen.png"],
@@ -751,5 +755,9 @@ exports.emotes = {
 	unyu: {
 		emote: "./images/unyu.png",
 		name: "unyu.png"
+	},
+	yanderebot: {
+		emote: "./images/yanderebot.png",
+		name: "yanderebot.png"
 	}
 };
