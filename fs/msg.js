@@ -283,6 +283,7 @@ exports.parser = {
 						return choonbot.sendFile(mChannel, oPath, "okuu-pet.gif");
 					} else buffer[buffer.length] = mMention[count].mention();
 				} else loop = false;
+				count++;
 			}
 			if (!buffer.length) {
 				let pet = ["*is pet*", "*appreciates the petting*", "*loves the petting*", "*reluctantly is pet*", "*demands you pet him more*", "*cute choonbot noises*", "*awkwardly blushes*", "*becomes a choonbot poff*", "*sputters*", "*murrs*", "*wags his tail cutely*"];
@@ -306,6 +307,7 @@ exports.parser = {
 						buffer = [], loop = false;
 					} else buffer[buffer.length] = mMention[count].mention();
 				} else loop = false;
+				count++;
 			}
 			if (!buffer.length) {
 				if (mContent === "ɥ") sender = "@" + mSender.username;
@@ -330,6 +332,7 @@ exports.parser = {
 						buffer = [], loop = false;
 					} else buffer[buffer.length] = mMention[count].mention();
 				} else loop = false;
+				count++;
 			}
 			if (!buffer.length && mSender.id !== "91184988610895872") return choonbot.sendMessage(mChannel, "how about no");
 			if (!buffer.length) {
@@ -354,6 +357,7 @@ exports.parser = {
 						buffer = [], loop = false;
 					} else buffer[buffer.length] = mMention[count].mention();
 				} else loop = false;
+				count++;
 			}
 			if (!buffer.length) {
 				if (mContent === "u") sender = "@" + mSender.username;
