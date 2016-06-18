@@ -521,7 +521,7 @@ exports.parser = {
 			if (mContent === "ɟ") toSend = toSend;
 			return choonbot.sendMessage(mChannel, toSend);
 		}
-	}
+	},
 	invite: {
 		command: function () {
 			return choonbot.sendMessage(mChannel, "if you want me on your server that badly just pester choon about it");
