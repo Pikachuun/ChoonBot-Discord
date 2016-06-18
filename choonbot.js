@@ -97,7 +97,7 @@ setInterval(function () {
 
 
 //And thus we begin.
-global.choonbot = new Discord.Client({autoReconnect:true, forceFetchUsers:true, maxCachedMessages:1024}); //We kinda need this right
+global.choonbot = new Discord.Client(); //We kinda need this right
 choonbot.on("ready", function () {
 	console.log("Ready! ('.w.') U:" + choonbot.users.length + "/S:" + choonbot.servers.length + "/C:" + choonbot.channels.length + "," + choonbot.privateChannels.length);
 	choonbot.setUsername("ChoonBot");
