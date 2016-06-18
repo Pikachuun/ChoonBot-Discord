@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/Pikachuun/ChoonBot-Discord#readme",
   "dependencies": {
-    "discord.js": "^7.0.1"
+    "discord.js": "^8.0.0"
   }
 }
