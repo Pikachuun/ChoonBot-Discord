@@ -251,13 +251,14 @@ choonbot.on("message", function (message) {
 		if (msg.indexOf(":") > -1) console.log("well I found a colon in there too");
 		if (msg.indexOf(":" + i) > -1) console.log("and I found a colon and the emote " + i);
 		if (msg.indexOf(":" + i + ":") > -1) console.log("wtf this should be parsing");
+		if (msg.indexOf(CFG.emtsymb[0] + i + CFG.emtsymb[1]) > -1) console.log("are you serious");
 		if (msg.indexOf(CFG.emtsymb[0] + i + CFG.emtsymb[1]) > -1) {
 			emote = PARSER.EMOTES[i];
 			if (!emote.rng) emote.rng = [1];
 			erng[1] = rng(emote.rng.reduce(function (a, b) {return a + b;}));
 			while (erng[2] < emote.rng.length) {
 				erng[0] += emote.rng[erng[2]];
-				if (erng[0] < erng[1]) {
+				if (erng[1] < erng[0]) {
 					let ePath = path.join(__dirname, "fs/emotes/" + emote.emotes[erng[2]]);
 					console.log("Emote Detected (" + emote.names[erng[2]] + ")! Sending " + ePath + ".");
 					return choonbot.sendFile(mChannel, ePath, emote.names[erng[2]]);
