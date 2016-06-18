@@ -510,6 +510,13 @@ exports.parser = {
 			return choonbot.sendMessage(mChannel, "The " + fossil + " says: **" + rne(praise) + "**");
 		}
 	},
+	respects: {
+		command: function (margs, message) {
+			if (mContent === "ɟ" && mSender.id !== "90956503476883456") return false;
+			let sender = (mContent !== "ɟ") ? mSender.mention() : "@" + mSender.username;
+			return choonbot.sendMessage(mChannel, (mContent === "ɟ") ? wavesine(sender + " has paid their respects"), sender + " has paid their respects");
+		}
+	},
 	invite: {
 		command: function () {
 			return choonbot.sendMessage(mChannel, "if you want me on your server that badly just pester choon about it");
