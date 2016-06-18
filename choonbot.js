@@ -247,6 +247,10 @@ choonbot.on("message", function (message) {
 	let emote = {};
 	let erng = [0, 0, 0];
 	for (i in PARSER.EMOTES) {
+		if (msg.indexOf(i) > -1) console.log("well I found the emote " + i + " somewhere in this message maybe");
+		if (msg.indexOf(":") > -1) console.log("well I found a colon in there too");
+		if (msg.indexOf(":" + i) > -1) console.log("and I found a colon and the emote " + i);
+		if (msg.indexOf(":" + i + ":") > -1) console.log("wtf this should be parsing");
 		if (msg.indexOf(CFG.emtsymb[0] + i + CFG.emtsymb[1]) > -1) {
 			emote = PARSER.EMOTES[i];
 			if (!emote.rng) emote.rng = [1];
