@@ -517,7 +517,8 @@ exports.parser = {
 		command: function (args, message) {
 			if (mContent === "ɟ" && mSender.id !== "90956503476883456") return false;
 			let sender = (mContent !== "ɟ") ? mSender.mention() : "@" + mSender.username;
-			let toSend = (mContent === "ɟ") ? wavesine(sender + " has paid their respects.") : sender + " has paid their respects."
+			let toSend = sender + " has paid their respects.";
+			if (mContent === "ɟ") toSend = toSend;
 			return choonbot.sendMessage(mChannel, toSend);
 		}
 	}
