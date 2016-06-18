@@ -118,9 +118,41 @@ choonbot.on("ready", function () {
 					fs.accessSync(dfilePath, fs.F_OK);
 				} catch (r) {
 					console.log("Server " + choonbot.servers[i].id + "'s folder doesn't exist. Creating folder...");
+					try {
+						fs.accessSync(path.join(__dirname, "fs/arch/"), fs.F_OK);
+					} catch (o) {
+						console.log("The archive folder in general doesn't exist. Creating folder...");
+						fs.mkdir(path.join(__dirname, "fs/arch/"), function (err) {
+							if (err) {
+								console.log("fuck it.");
+								console.log(err.stack);
+								process.exit(-1);
+							} else {
+								fs.mkdir(dfilePath, function (err) {
+									if (err) {
+										console.log("??????????");
+										console.log(err.stack);
+										process.exit(-1);
+									}
+								});
+								fs.writeFile(mfilePath, "", function (err) {
+									if (err) {
+										console.log("??????????");
+										console.log(err.stack);
+									}
+								});
+								fs.writeFile(qfilePath, "", function (err) {
+									if (err) {
+										console.log("??????????");
+										console.log(err.stack);
+									}
+								});
+							}
+						});
+					}
 					fs.mkdir(dfilePath, function (err) {
 						if (err) {
-							console.log("fuck it.");
+							console.log("??????????");
 							console.log(err.stack);
 							process.exit(-1);
 						}
