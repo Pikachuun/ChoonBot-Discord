@@ -1,31 +1,80 @@
 'use strict';
 
-//Configuration. Note that these are globals!
+exports.config = {
 
-//I like these people the most [use ids]!
-exports.whitelist = {};
-//And these people should die.
-exports.blacklist = {};
-//And this is me.
-exports.selfID = "";
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////     Important  Options     //////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-//Want me to be more eloquent?
-exports.verbose = false;
+							//User Token
+token: 						"",
+							//The bot's token. It needs this to log in.
+	
+							//Verbose Switch
+verbose: 					false,
+							//Should we print more stuff to the console?
+	
+							//Command Symbols
+cmdsymb: 					[""],
+							//Put one of these at the start of a message to send it.
 
-//These rooms we don't like spam in...
-exports.noSpam = {};
-//We can do whatever we want here.
-exports.absoluteChannel = {};
-//We can only post hmms here.
-exports.onlyHmm = {};
-//And these rooms we should just avoid.
-exports.antipost = {};
-//Server that we should avoid except for specific channels:
-exports.serverCrosstalk = {};
+							//Emote Symbols
+emtsymb: 					["", ""],
+							//Put the first one in before, and the second one after an emote to parse it.
 
-//I use these!
-exports.cmdS = []; //Command symbols. Put one of these before the command!
-exports.emtS = ["", ""]; //Emote symbols. Format: [start, end].
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////         Whitelists         //////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+whitelist: {
+							//User Whitelist
+users: 						[""],
+							//Users that can use all of the bot's features.
+							
+							//Channel Whitelist
+channels: 					[""],
+							//Channels that all of the bot's features can be used in, regardless of user [except for blacklisted ones].
 
-//And my login credentials are...
-exports.TOKEN = "";
+							//Server Whitelist
+servers: 					[""],
+							//Servers that all of the bot's features can be used in, regardless of user [except for blacklisted ones].
+},
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////         Blacklists         //////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+blacklist: {
+							//User Blacklist
+users: 						[""],
+							//Users that cannot use the bot at all.
+							
+							//Channel Blacklist
+channels: 					[""],
+							//Channels that the bot cannot be used in, except if the user is whitelisted.
+
+							//Server Blacklist
+servers: 					[""],
+							//Servers that the bot cannot be used in, except if the user is whitelisted.
+},
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////         Miscellaneous Config         /////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+							//Channel Graylist
+graylist: 					[""],
+							//Channels that the bot can be used in, even if the server is blacklisted.
+
+							//Channel Spamlist
+spamlist: 					[""],
+							//Channels that spammy commands for the bot cannot be used in.
+
+							//Channel Non-Command Banlist
+forcecmd: 					[""],
+							//Channels that non-command/emotes things cannot be used in.
+
+							//Channel Emote Banlist
+noemotes: 					[""],
+							//Channels that emotes are banned in.
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+};
