@@ -10,15 +10,16 @@ global.path = require('path');
 global.request = require('superagent');
 //Required Files
 try { //config
-	global.CFG = require('./config.js').config;
+	global.CFG = require(path.join(__dirname, "config.js")).config;
 } catch (e) {
 	console.log("config.js doesn't exist; try copying config-base.js to config.js.");
 	process.exit(-1);
 }
 try { //message parsing
-	global.PARSER = require("./fs/msg.js").parser;
+	global.PARSER = require(path.join(__dirname, "fs/msg.js")).parser;
 } catch (e) {
 	console.log("msg.js doesn't exist; how am I supposed to respond to messages if I don't know how to react?");
+	console.log(e.stack);
 	process.exit(-1);
 }
 //Global Functions + Misc.
