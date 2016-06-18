@@ -264,7 +264,8 @@ exports.parser = {
 			if (mContent === "ɔ" && mSender.id !== "90956503476883456") return false;
 			let sender = (mContent !== "ɔ") ? mSender.mention() : "@" + mSender.username;
 			let cri = [";_;", ";_;7", "*cries softly*", "BibleThump", "bibolfamp", "notlikethis", ";~;", ";-;", "(;_ʖ;)", "*runs up to " + mSender.mention() + " and cries on their shoulder*", "*sobs*", "*weeps*", "*plays a sad song on the worlds smallest violin*", ",.,", ",x,", ";x;", "FeelsBadMan"];
-			return choonbot.sendMessage(mChannel, (mContent === "ɔ") ? wavesine(rne(cri)) : rne(cri));
+			let toSend = (mContent === "ɔ") ? wavesine(rne(cri)) : rne(cri);
+			return choonbot.sendMessage(mChannel, toSend);
 		}
 	},
 	pet: {
@@ -285,7 +286,8 @@ exports.parser = {
 			}
 			if (!buffer.length) {
 				let pet = ["*is pet*", "*appreciates the petting*", "*loves the petting*", "*reluctantly is pet*", "*demands you pet him more*", "*cute choonbot noises*", "*awkwardly blushes*", "*becomes a choonbot poff*", "*sputters*", "*murrs*", "*wags his tail cutely*"];
-				return choonbot.sendMessage(mChannel, (mContent === "d") ? wavesine(rne(pet)) : rne(pet));
+				let toSend = (mContent === "d") ? wavesine(rne(pet)) : rne(pet);
+				return choonbot.sendMessage(mChannel, toSend);
 			}
 			if (buffer.length === 1) return choonbot.sendMessage(mChannel, "*pets " + buffer[0] + "*");
 			if (buffer.length === 2) return choonbot.sendMessage(mChannel, "*pets " + buffer[0] + " and " + buffer[1] + "*");
@@ -308,7 +310,8 @@ exports.parser = {
 			if (!buffer.length) {
 				if (mContent === "ɥ") sender = "@" + mSender.username;
 				let hug = ["*is hugged*", "*hugs back*", "*loves " + sender + "'s hug*", "*hugs " + sender + " back and breaks away*\nIt's not that I wanted you to hug me or anything, you baka...", "*cute choonbot noises*", "*gives " + sender + " a tight hug*", "*hugs " + sender + " back and kisses them on the cheek*", "*awkwardly blushes and hugs " + sender + " back*", "*floofs*", "*snuggles with " + sender + "*", "*cuddles " + sender + "*"];
-				return choonbot.sendMessage(mChannel, (mContent === "ɥ") ? wavesine(rne(hug)) : rne(hug));
+				let toSend = (mContent === "ɥ") ? wavesine(rne(hug)) : rne(hug);
+				return choonbot.sendMessage(mChannel, toSend);
 			}
 			if (buffer.indexOf(sender) > -1) return choonbot.sendMessage(mChannel, sender + " hugs themself.");
 			if (buffer.length === 1) return choonbot.sendMessage(mChannel, sender + " has hugged " + buffer[0] + "!");
@@ -514,7 +517,8 @@ exports.parser = {
 		command: function (args, message) {
 			if (mContent === "ɟ" && mSender.id !== "90956503476883456") return false;
 			let sender = (mContent !== "ɟ") ? mSender.mention() : "@" + mSender.username;
-			return choonbot.sendMessage(mChannel, (mContent === "ɟ") ? wavesine(sender + " has paid their respects.") : sender + " has paid their respects.")
+			let toSend = (mContent === "ɟ") ? wavesine(sender + " has paid their respects.") : sender + " has paid their respects.")
+			return choonbot.sendMessage(mChannel, toSend);
 		}
 	}
 	invite: {
