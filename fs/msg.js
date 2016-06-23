@@ -11,8 +11,6 @@ exports.parser = {
 		h: "hug",
 		H: "hug",
 		ɥ: "hug",
-		k: "kiss",
-		K: "kiss",
 		n: "nuzzle",
 		N: "nuzzle",
 		u: "nuzzle",
@@ -381,7 +379,7 @@ exports.parser = {
 	pick: {
 		command: function (args) {
 			if (!args || !args[0]) return choonbot.sendMessage(mChannel, ">not even giving me a single choice");
-			if (args[0] === "*" && args.length === 1) return choonbot.sendMessage(mChannel, "I choose: **to believe you're incredibly dense.**");
+			//if (args[0] === "*" && args.length === 1) return choonbot.sendMessage(mChannel, "I choose: **to believe you're incredibly dense.**");
 			if (args.length < 2) return choonbot.sendMessage(mChannel, "That isn't really a choice.");
 			for (let i = 1; i < args.length; i++) {
 				for (let j = 0; j < i; j++) {

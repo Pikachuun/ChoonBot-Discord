@@ -211,21 +211,22 @@ choonbot.on("message", function (message) {
 	// Command Parsing //
 	/////////////////////
 	let i = 0;
-	let cmd = ["", true];
+	let cmd = ["", true, false];
 	//Default
 	for (i = 0; i < CFG.cmdsymb.length; i++) {
 		if (mContent.substr(0, CFG.cmdsymb[i].length) === CFG.cmdsymb[i]) {
 			cmd[0] = msg.substr(CFG.cmdsymb[i].length).split(" ")[0];
+			cmd[2] = CFG.cmdsymb[i];
 		}
 	}
 	//No Symbol
 	if (PARSER.CMDLESS && mContent in PARSER.CMDLESS && CFG.forcecmd.indexOf(mChannel.id) === -1 && !(CFG.forcecmd.indexOf(mServer.id) > -1 && CFG.graylist.indexOf(mChannel.id) === -1)) {
-		cmd = [PARSER.CMDLESS[mContent], false];
+		cmd = [PARSER.CMDLESS[mContent], false, false];
 	}
 	//Special Cases
 	if (!cmd[0]) {
 		if (mContent.indexOf("🍡") > -1) {
-			cmd = ["dango", false];
+			cmd = ["dango", false, false];
 		}
 	}
 	if (cmd[0] in PARSER) {
@@ -233,7 +234,7 @@ choonbot.on("message", function (message) {
 		if (exec.alias && exec.alias in PARSER) exec = PARSER[exec.alias];
 		console.log("Command Detected (" + cmd[0] + ")!");
 		if (exec.command && !(cmd[1] && exec.noCall) && !(exec.isSpam && (CFG.spamlist.indexOf(mChannel.id) > -1 || CFG.spamlist.indexOf(mServer.id) > -1 && CFG.graylist.indexOf(mChannel.id) === -1)) && !(exec.wlonly && CFG.whitelist.users.indexOf(mSender.id) === -1)) {
-			let args = mContent.substr(cmd[0].length + 2).split(", ");
+			let args = (cmd[2]) ? mContent.substr(cmd[0].length + 1 + cmd[2].length).split(", ") : [];
 			message.command = cmd[0]; //pass the command over
 			return exec.command(args, message);
 		}
