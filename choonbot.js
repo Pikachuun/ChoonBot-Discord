@@ -267,6 +267,7 @@ choonbot.on("messageDeleted", function (message, channel) {
 	if (!message || !message.content) return false;
 	let str = "";
 	if (message.sender.id === "91184988610895872") str += "Bob. I saw that. You said \"" + message.content + "\" right?";
+	if (message.sender.id === "127924958335729664") str += "Kirai, you too? *sigh* You said \"" + message.content + "\" right?";
 	if (str) return choonbot.sendMessage(channel, str);
 });
 
