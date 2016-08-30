@@ -271,7 +271,7 @@ choonbot.on("messageDeleted", function (message, channel) {
 	if (str) return choonbot.sendMessage(channel, str);
 });
 choonbot.on("messageUpdated", function (message, message2) {
-	if (!message || !message.content || message.channel) return false;
+	if (!message || !message.content) return false;
 	let str = "";
 	if (message.sender.id === "91184988610895872") str += "Bob said \"" + message.content + "\"\nHere's an edit for you for thinking that would work this time ( ° ͜ʖ͡°)╭∩╮";
 	if (str) return choonbot.sendMessage(message.channel, str);
